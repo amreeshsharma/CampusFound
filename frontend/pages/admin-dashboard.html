@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - CampusFind 2.0</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+  <!-- Chart.js CDN for Analytics Visuals -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="../index.html" class="navbar-brand">
+          <img src="../assets/logos/logo.svg" alt="CampusFind 2.0 Logo">
+        </a>
+        <span class="badge badge-match" style="background-color: var(--primary-color); color: var(--white); border: none;">ADMIN CONSOLE</span>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="dashboard.html" class="nav-link">Student View</a>
+        <a href="admin-dashboard.html" class="nav-link active">Admin Console</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <button onclick="handleLogout(event)" class="btn btn-outline btn-sm">Sign Out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content section" style="padding-top: 2rem; background-color: var(--background-color);">
+    <div class="container">
+      <div class="dashboard-header">
+        <div>
+          <h1>Campus Governance & Verification</h1>
+          <p>Oversee all reported items, review ownership claims, and inspect campus recovery trends.</p>
+        </div>
+      </div>
+
+      <!-- Admin KPI Counters -->
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-primary">👥</div>
+          <div class="stat-content">
+            <div class="stat-value">148</div>
+            <div class="stat-label">Active Students</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-danger">🔍</div>
+          <div class="stat-content">
+            <div class="stat-value">42</div>
+            <div class="stat-label">Lost Reports</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-success">📦</div>
+          <div class="stat-content">
+            <div class="stat-value">37</div>
+            <div class="stat-label">Found In Custody</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-warning">📑</div>
+          <div class="stat-content">
+            <div class="stat-value">8</div>
+            <div class="stat-label">Pending Claim Audits</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-primary">🏆</div>
+          <div class="stat-content">
+            <div class="stat-value">350+</div>
+            <div class="stat-label">Resolved Recoveries</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Tab Switcher -->
+      <div class="admin-header-tabs">
+        <button class="admin-tab-btn active" data-tab="tab-claims">
+          📑 Review Claims (3 Pending)
+        </button>
+        <button class="admin-tab-btn" data-tab="tab-items">
+          📦 Manage Item Registry
+        </button>
+        <button class="admin-tab-btn" data-tab="tab-users">
+          👥 Registered Users
+        </button>
+        <button class="admin-tab-btn" data-tab="tab-analytics">
+          📈 Platform Analytics & Trends
+        </button>
+      </div>
+
+      <!-- Tab 1: Claims Review -->
+      <section id="tab-claims" class="admin-tab-content active">
+        <div class="card">
+          <div class="card-header">
+            <h3 style="font-size: 1.15rem;">Ownership Claims Requiring Admin Action</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Claim ID</th>
+                  <th>Claimant Student</th>
+                  <th>Target Item</th>
+                  <th>Verification Statement</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>CLM-1092</strong></td>
+                  <td>
+                    <div class="table-user-cell">
+                      <div class="table-user-avatar">RS</div>
+                      <div>
+                        <div style="font-weight:600;">Rahul Sharma</div>
+                        <div style="font-size:0.75rem; color:var(--color-text-muted);">23CSE012</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Casio fx-991EX Calculator</td>
+                  <td style="font-size: 0.8125rem; max-width: 280px;">
+                    "Silver name sticker 'Rahul S.' on rear battery slide cover with minor scratch."
+                  </td>
+                  <td><span class="badge badge-pending">PENDING AUDIT</span></td>
+                  <td>
+                    <div style="display: flex; gap: 0.4rem;">
+                      <button class="btn btn-success btn-sm" onclick="handleAdminApproveClaim('CLM-1092')">Approve</button>
+                      <button class="btn btn-danger btn-sm" onclick="handleAdminRejectClaim('CLM-1092')">Reject</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>CLM-1044</strong></td>
+                  <td>
+                    <div class="table-user-cell">
+                      <div class="table-user-avatar">AP</div>
+                      <div>
+                        <div style="font-weight:600;">Ananya Patel</div>
+                        <div style="font-size:0.75rem; color:var(--color-text-muted);">22ECE045</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Wireless Earbuds Case</td>
+                  <td style="font-size: 0.8125rem; max-width: 280px;">
+                    "Left earbud charging contact dented; matches serial SN-78."
+                  </td>
+                  <td><span class="badge badge-approved">APPROVED</span></td>
+                  <td>
+                    <span style="font-size:0.75rem; color:var(--color-success); font-weight:600;">Verified Handover</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>CLM-0988</strong></td>
+                  <td>
+                    <div class="table-user-cell">
+                      <div class="table-user-avatar">KV</div>
+                      <div>
+                        <div style="font-weight:600;">Karan Verma</div>
+                        <div style="font-size:0.75rem; color:var(--color-text-muted);">24ME019</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Stainless Steel Water Flask</td>
+                  <td style="font-size: 0.8125rem; max-width: 280px;">
+                    "Claimed silver color with superhero stickers."
+                  </td>
+                  <td><span class="badge badge-rejected">REJECTED</span></td>
+                  <td>
+                    <span style="font-size:0.75rem; color:var(--color-text-muted);">Mismatch audit</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 2: Manage Items Registry -->
+      <section id="tab-items" class="admin-tab-content">
+        <div class="card">
+          <div class="card-header">
+            <h3 style="font-size: 1.15rem;">Campus Belongings Registry</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Item ID</th>
+                  <th>Title</th>
+                  <th>Type</th>
+                  <th>Category</th>
+                  <th>Location</th>
+                  <th>QR Tag</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#001</td>
+                  <td>Blue Hydro Flask Water Bottle</td>
+                  <td><span class="badge badge-found">FOUND</span></td>
+                  <td>Bottles</td>
+                  <td>Central Library, 2nd Flr</td>
+                  <td><code>QR-FND-88219</code></td>
+                  <td><span class="badge badge-found">OPEN</span></td>
+                  <td><button class="btn btn-outline-secondary btn-sm" onclick="handleAdminDeleteItem(1)">Delete</button></td>
+                </tr>
+                <tr>
+                  <td>#002</td>
+                  <td>Casio Scientific Calculator fx-991EX</td>
+                  <td><span class="badge badge-lost">LOST</span></td>
+                  <td>Electronics</td>
+                  <td>Mech Lab 3</td>
+                  <td>—</td>
+                  <td><span class="badge badge-pending">CLAIM PENDING</span></td>
+                  <td><button class="btn btn-outline-secondary btn-sm" onclick="handleAdminDeleteItem(2)">Delete</button></td>
+                </tr>
+                <tr>
+                  <td>#003</td>
+                  <td>Noise Cancelling Wireless Earbuds</td>
+                  <td><span class="badge badge-found">FOUND</span></td>
+                  <td>Electronics</td>
+                  <td>Auditorium, Row F</td>
+                  <td><code>QR-FND-43921</code></td>
+                  <td><span class="badge badge-recovered">RECOVERED</span></td>
+                  <td><button class="btn btn-outline-secondary btn-sm" onclick="handleAdminDeleteItem(3)">Delete</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 3: Users Management -->
+      <section id="tab-users" class="admin-tab-content">
+        <div class="card">
+          <div class="card-header">
+            <h3 style="font-size: 1.15rem;">Registered Students & Staff</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Roll / ID</th>
+                  <th>Email</th>
+                  <th>Department</th>
+                  <th>Role</th>
+                  <th>Account Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="table-user-cell">
+                      <div class="table-user-avatar">AS</div>
+                      <span style="font-weight:600;">Aman Sharma</span>
+                    </div>
+                  </td>
+                  <td>23CSE089</td>
+                  <td>student@campus.edu</td>
+                  <td>Computer Science & Engineering</td>
+                  <td>Student</td>
+                  <td><span class="badge badge-found">ACTIVE</span></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="table-user-cell">
+                      <div class="table-user-avatar">CS</div>
+                      <span style="font-weight:600;">Campus Security Admin</span>
+                    </div>
+                  </td>
+                  <td>STAFF-001</td>
+                  <td>admin@campusfind.edu</td>
+                  <td>Campus Security Command</td>
+                  <td>Administrator</td>
+                  <td><span class="badge badge-found">ACTIVE</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 4: Analytics with Chart.js -->
+      <section id="tab-analytics" class="admin-tab-content">
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h4>Item Categories Distribution</h4>
+            <div class="chart-container">
+              <canvas id="chart-categories"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <h4>Monthly Lost vs. Recovery Resolution Trends</h4>
+            <div class="chart-container">
+              <canvas id="chart-monthly-trends"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container text-center" style="font-size: 0.8125rem; color: #A3B8BA;">
+      &copy; 2026 CampusFind 2.0. Academic PBL Submission &bull; B.Tech CSE
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+</html>
+

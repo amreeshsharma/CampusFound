@@ -1,0 +1,195 @@
+/**
+ * CampusFind 2.0 - Responsive Design
+ * Breakpoints: 1440px, 1024px, 768px, 425px, 375px, 320px
+ * Mobile navigation, drawer sidebar, flexible form rows, table alternatives
+ */
+
+/* ==========================================================================
+   LAPTOPS & TABLETS (max-width: 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 220px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6, 1.5rem);
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .item-details-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-6, 1.5rem);
+  }
+
+  .dashboard-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   TABLETS & MEDIUM SCREENS (max-width: 768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Navigation */
+  .nav-menu {
+    position: fixed;
+    top: var(--navbar-height, 72px);
+    left: -100%;
+    width: 280px;
+    height: calc(100vh - var(--navbar-height, 72px));
+    background-color: var(--white, #FFFFFF);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-6, 1.5rem);
+    box-shadow: var(--shadow-lg, 0 10px 25px rgba(24, 52, 56, 0.1));
+    transition: left var(--transition-base, 250ms ease);
+    z-index: var(--z-sticky, 1020);
+    overflow-y: auto;
+  }
+
+  .nav-menu.active {
+    left: 0;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  /* Authentication Split Container */
+  .auth-container {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .auth-banner {
+    display: none; /* Hide banner on mobile to keep focus on form */
+  }
+
+  /* Form Grids */
+  .form-row,
+  .form-row-3 {
+    grid-template-columns: 1fr;
+    gap: var(--space-3, 0.75rem);
+  }
+
+  /* Dashboard Responsive Layout */
+  .dashboard-layout {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .dashboard-sidebar {
+    position: fixed;
+    top: var(--navbar-height, 72px);
+    left: -100%;
+    width: 280px;
+    height: calc(100vh - var(--navbar-height, 72px));
+    z-index: var(--z-dropdown, 1000);
+    box-shadow: var(--shadow-xl, 0 20px 40px rgba(24, 52, 56, 0.15));
+    transition: left var(--transition-base, 250ms ease);
+  }
+
+  .dashboard-sidebar.active {
+    left: 0;
+  }
+
+  .dashboard-content {
+    padding: var(--space-4, 1rem);
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Footer */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6, 1.5rem);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+}
+
+/* ==========================================================================
+   MOBILE DEVICES (max-width: 425px)
+   ========================================================================== */
+@media (max-width: 425px) {
+  html {
+    font-size: 15px;
+  }
+
+  .container {
+    padding-left: var(--space-3, 0.75rem);
+    padding-right: var(--space-3, 0.75rem);
+  }
+
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-card {
+    padding: var(--space-6, 1.5rem) var(--space-4, 1rem);
+  }
+
+  .items-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input-group,
+  .filter-select {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .btn-lg {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+
+  .modal-dialog {
+    margin: var(--space-2, 0.5rem);
+  }
+}
+
+/* ==========================================================================
+   VERY SMALL MOBILES (320px - 375px)
+   ========================================================================== */
+@media (max-width: 375px) {
+  .navbar-brand img {
+    height: 34px;
+  }
+
+  .dashboard-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .dashboard-actions .btn {
+    width: 100%;
+  }
+
+  .item-card-image-wrap {
+    height: 150px;
+  }
+}
+

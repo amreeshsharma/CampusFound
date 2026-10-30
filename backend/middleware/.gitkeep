@@ -1,0 +1,6 @@
+# Backend Middleware
+Contains authentication, validation, and file handling middleware:
+- authMiddleware.js
+- adminMiddleware.js
+- uploadMiddleware.js
+

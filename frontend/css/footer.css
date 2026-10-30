@@ -1,0 +1,91 @@
+/**
+ * CampusFind 2.0 - Footer Styles
+ * Campus emergency info, quick navigation, brand statement
+ */
+
+.footer {
+  background-color: #00373E;
+  color: #EFDECD;
+  padding-top: var(--space-12, 3rem);
+  padding-bottom: var(--space-6, 1.5rem);
+  margin-top: auto;
+  border-top: 4px solid var(--secondary-color, #EFDECD);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: var(--space-8, 2rem);
+  margin-bottom: var(--space-10, 2.5rem);
+}
+
+.footer-brand p {
+  color: #D3DFE0;
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+.footer-col h4 {
+  color: var(--white, #FFFFFF);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.footer-col h4::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 24px;
+  height: 2px;
+  background-color: var(--secondary-color, #EFDECD);
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.footer-links a {
+  color: #D3DFE0;
+  font-size: 0.875rem;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+.footer-links a:hover {
+  color: var(--secondary-color, #EFDECD);
+  transform: translateX(3px);
+}
+
+.footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  color: #D3DFE0;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.footer-contact-item strong {
+  color: var(--white, #FFFFFF);
+}
+
+.footer-bottom {
+  padding-top: var(--space-6, 1.5rem);
+  border-top: 1px solid rgba(239, 222, 205, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: #A3B8BA;
+}
+
+.footer-bottom a {
+  color: var(--secondary-color, #EFDECD);
+}
+

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - CampusFind 2.0</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+</head>
+<body>
+
+  <!-- Minimal Header -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-brand">
+        <img src="../assets/logos/logo.svg" alt="CampusFind 2.0 Logo">
+      </a>
+      <div class="navbar-actions">
+        <span style="font-size: 0.875rem; color: var(--color-text-muted);">Don't have an account?</span>
+        <a href="register.html" class="btn btn-outline btn-sm">Create Account</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="auth-wrapper">
+    <div class="auth-container">
+      <!-- Left Brand Banner -->
+      <div class="auth-banner">
+        <div>
+          <span class="section-tag" style="background-color: rgba(239, 222, 205, 0.2); color: #EFDECD;">Campus Portal</span>
+          <h2>Welcome back to CampusFind</h2>
+          <p>Sign in to manage your lost or found belongings, review potential matching alerts, and verify ownership claims.</p>
+          
+          <div class="auth-feature-list">
+            <div class="auth-feature-item">
+              <span class="auth-feature-icon">✓</span>
+              <span>Rule-based automated item match notifications</span>
+            </div>
+            <div class="auth-feature-item">
+              <span class="auth-feature-icon">✓</span>
+              <span>QR code security verification for found items</span>
+            </div>
+            <div class="auth-feature-item">
+              <span class="auth-feature-icon">✓</span>
+              <span>Official campus security desk integration</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size: 0.75rem; color: #A3B8BA; margin-top: 2rem;">
+          Academic Web Technology PBL Project &bull; B.Tech CSE
+        </div>
+      </div>
+
+      <!-- Right Login Form -->
+      <div class="auth-card">
+        <div class="auth-header">
+          <h3>Sign in to your account</h3>
+          <p>Enter your student or administrative credentials below.</p>
+        </div>
+
+        <!-- Demo Quick-Fill Pill Box for College Viva -->
+        <div class="demo-credentials-box">
+          <div class="title">
+            <span>⚡ Quick Demo Login (PBL Presentation):</span>
+          </div>
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.4rem;">
+            <button type="button" class="demo-pill-btn" onclick="fillDemoCredentials('student')">Student Login</button>
+            <button type="button" class="demo-pill-btn" style="background-color: var(--color-primary-light);" onclick="fillDemoCredentials('admin')">Admin Console</button>
+          </div>
+        </div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="login-email">
+              College Email <span class="required">*</span>
+            </label>
+            <input type="email" id="login-email" class="form-control" placeholder="e.g. rahul@campus.edu" required autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <label for="login-password">Password <span class="required">*</span></label>
+              <a href="#" onclick="showToast('Password reset link simulated to your college email.', 'info'); return false;" style="font-size: 0.75rem; color: var(--primary-color);">Forgot password?</a>
+            </div>
+            <div class="input-password-wrapper">
+              <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
+              <button type="button" class="btn-toggle-password" aria-label="Toggle password visibility">👁</button>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label class="form-checkbox-label">
+              <input type="checkbox" id="login-remember" class="form-checkbox" checked>
+              <span>Keep me signed in on this computer</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg">Sign In</button>
+        </form>
+
+        <div class="auth-footer-text">
+          New to CampusFind? <a href="register.html">Register as Student</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" style="padding-top: 1.5rem; padding-bottom: 1.5rem;">
+    <div class="container text-center" style="font-size: 0.8125rem; color: #A3B8BA;">
+      &copy; 2026 CampusFind 2.0. Academic PBL Submission.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+</body>
+</html>
+

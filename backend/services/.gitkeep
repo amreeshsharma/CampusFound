@@ -1,0 +1,6 @@
+# Backend Services
+Contains domain services and algorithmic logic:
+- matchingService.js (Rule-based matching algorithm)
+- qrService.js (QR code generation & token verification)
+- notificationService.js (Notification dispatcher)
+

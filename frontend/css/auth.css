@@ -1,0 +1,141 @@
+/**
+ * CampusFind 2.0 - Authentication Styles
+ * Split container, form controls, role selector, demo credentials pill
+ */
+
+.auth-wrapper {
+  min-height: calc(100vh - var(--navbar-height, 72px));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8, 2rem) var(--space-4, 1rem);
+  background-color: var(--background-color, #FAF8F5);
+}
+
+.auth-container {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  width: 100%;
+  max-width: 960px;
+  background-color: var(--white, #FFFFFF);
+  border-radius: var(--radius-xl, 20px);
+  border: 1px solid var(--color-border, #E6E1D9);
+  box-shadow: var(--shadow-xl, 0 20px 40px rgba(24, 52, 56, 0.1));
+  overflow: hidden;
+}
+
+.auth-banner {
+  background: linear-gradient(145deg, #004953 0%, #003038 100%);
+  color: var(--white, #FFFFFF);
+  padding: var(--space-10, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-banner::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background-color: var(--secondary-color, #EFDECD);
+  opacity: 0.1;
+  border-radius: 50%;
+}
+
+.auth-banner h2 {
+  color: var(--white, #FFFFFF);
+  font-size: 1.875rem;
+  margin-bottom: 1rem;
+}
+
+.auth-banner p {
+  color: #D3DFE0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.auth-feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.auth-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: #EFDECD;
+}
+
+.auth-feature-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(239, 222, 205, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary-color, #EFDECD);
+  font-size: 0.75rem;
+}
+
+.auth-card {
+  padding: var(--space-10, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-header {
+  margin-bottom: var(--space-6, 1.5rem);
+}
+
+.auth-header h3 {
+  font-size: 1.625rem;
+  margin-bottom: 0.35rem;
+}
+
+.demo-credentials-box {
+  background-color: var(--color-bg-light, #FAF8F5);
+  border: 1px dashed var(--color-border, #E6E1D9);
+  border-radius: var(--radius-md, 10px);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.8125rem;
+}
+
+.demo-credentials-box .title {
+  font-weight: 700;
+  color: var(--primary-color, #004953);
+  margin-bottom: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.demo-pill-btn {
+  background-color: var(--secondary-color, #EFDECD);
+  color: var(--primary-color, #004953);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-xs, 4px);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-footer-text {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.auth-footer-text a {
+  font-weight: 600;
+}
+

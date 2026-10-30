@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lost Items Catalog - CampusFind 2.0</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/items.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-brand">
+        <img src="../assets/logos/logo.svg" alt="CampusFind 2.0 Logo">
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-menu">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="lost-items.html" class="nav-link active">Lost Items</a>
+        <a href="found-items.html" class="nav-link">Found Items</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <!-- Rendered by navbar.js -->
+        <a href="report-lost.html" class="btn btn-primary btn-sm">Report Lost Item</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content section" style="padding-top: 2rem;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span class="badge badge-lost" style="margin-bottom: 0.5rem;">STUDENT REPORTS</span>
+          <h1>Lost Items Catalog</h1>
+          <p>Belongings currently reported missing by students across campus facilities.</p>
+        </div>
+        <div>
+          <a href="report-lost.html" class="btn btn-primary btn-sm">
+            <span>➕</span> Report a Lost Belonging
+          </a>
+        </div>
+      </div>
+
+      <!-- Filter & Search Toolbar -->
+      <div class="filter-bar">
+        <div class="search-input-group">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-items-input" class="form-control" placeholder="Search by item name, brand, color, or location...">
+        </div>
+
+        <select id="category-filter" class="form-select filter-select">
+          <option value="">All Categories</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Books">Books & Stationery</option>
+          <option value="ID">ID Cards & Wallets</option>
+          <option value="Bottles">Bottles & Containers</option>
+          <option value="Keys">Keys & Accessories</option>
+        </select>
+
+        <select id="location-filter" class="form-select filter-select">
+          <option value="">All Locations</option>
+          <option value="Library">Central Library</option>
+          <option value="Lab">Academic Labs</option>
+          <option value="Cafeteria">Cafeteria</option>
+          <option value="Auditorium">Auditorium</option>
+          <option value="Hostel">Hostel Grounds</option>
+        </select>
+
+        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('search-items-input').value=''; document.getElementById('category-filter').value=''; document.getElementById('location-filter').value=''; initItemsPage();">
+          Reset Filters
+        </button>
+      </div>
+
+      <!-- Items Grid -->
+      <div class="items-grid" id="items-grid-container" data-item-type="lost">
+        <!-- Rendered dynamically by items.js -->
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container text-center" style="font-size: 0.8125rem; color: #A3B8BA;">
+      &copy; 2026 CampusFind 2.0. Academic PBL Submission &bull; B.Tech CSE
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/items.js"></script>
+  <script src="../js/search.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile & Settings - CampusFind 2.0</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-brand">
+        <img src="../assets/logos/logo.svg" alt="CampusFind 2.0 Logo">
+      </a>
+
+      <nav class="nav-menu">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="lost-items.html" class="nav-link">Lost Items</a>
+        <a href="found-items.html" class="nav-link">Found Items</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <!-- Rendered by navbar.js -->
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link"><span>📊</span> Overview</a>
+        <a href="lost-items.html" class="sidebar-link"><span>🔍</span> Lost Items Catalog</a>
+        <a href="found-items.html" class="sidebar-link"><span>📦</span> Found Items Catalog</a>
+        <a href="report-lost.html" class="sidebar-link"><span>📝</span> Report Lost Item</a>
+        <a href="report-found.html" class="sidebar-link"><span>🎁</span> Report Found Item</a>
+        <a href="my-claims.html" class="sidebar-link"><span>📑</span> My Claims</a>
+        <a href="notifications.html" class="sidebar-link"><span>🔔</span> Notifications</a>
+        <a href="profile.html" class="sidebar-link active"><span>👤</span> Profile & Settings</a>
+      </nav>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="dashboard-content" style="max-width: 900px;">
+      <div class="dashboard-header">
+        <div>
+          <h1>Student Profile & Security</h1>
+          <p>Manage your campus enrollment credentials and contact details.</p>
+        </div>
+      </div>
+
+      <!-- Profile Information Form -->
+      <div class="card" style="margin-bottom: 2rem;">
+        <div class="card-header">
+          <h3 style="font-size: 1.15rem;">Academic Profile</h3>
+        </div>
+        <div class="card-body">
+          <form id="profile-info-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="profile-name">Full Name</label>
+                <input type="text" id="profile-name" class="form-control" value="Aman Sharma" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="profile-student-id">Student Roll / ID</label>
+                <input type="text" id="profile-student-id" class="form-control" value="23CSE089" readonly style="background-color: var(--color-bg-light);">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="profile-email">College Email</label>
+                <input type="email" id="profile-email" class="form-control" value="student@campus.edu" readonly style="background-color: var(--color-bg-light);">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="profile-dept">Academic Department</label>
+                <input type="text" id="profile-dept" class="form-control" value="Computer Science & Engineering">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-sm">Save Profile Changes</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Password Update Section -->
+      <div class="card">
+        <div class="card-header">
+          <h3 style="font-size: 1.15rem;">Security Credentials</h3>
+        </div>
+        <div class="card-body">
+          <form id="profile-password-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="profile-new-pass">New Password</label>
+                <input type="password" id="profile-new-pass" class="form-control" placeholder="Min. 6 characters" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="profile-confirm-pass">Confirm New Password</label>
+                <input type="password" id="profile-confirm-pass" class="form-control" placeholder="Repeat new password" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-outline btn-sm">Update Password</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="container text-center" style="font-size: 0.8125rem; color: #A3B8BA;">
+      &copy; 2026 CampusFind 2.0. Academic PBL Submission &bull; B.Tech CSE
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/profile.js"></script>
+</body>
+</html>
+

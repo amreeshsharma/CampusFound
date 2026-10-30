@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Found Item - CampusFind 2.0</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-brand">
+        <img src="../assets/logos/logo.svg" alt="CampusFind 2.0 Logo">
+      </a>
+
+      <nav class="nav-menu">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="lost-items.html" class="nav-link">Lost Items</a>
+        <a href="found-items.html" class="nav-link">Found Items</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <!-- Rendered by navbar.js -->
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content section" style="padding-top: 2rem; background-color: var(--background-color);">
+    <div class="container" style="max-width: 800px;">
+      <div style="margin-bottom: 2rem;">
+        <span class="badge badge-found" style="margin-bottom: 0.5rem;">CUSTODY LOG</span>
+        <h1>Report a Found Item</h1>
+        <p>Log a misplaced item you discovered on campus or deposited with campus security.</p>
+      </div>
+
+      <div class="card" style="box-shadow: var(--shadow-md);">
+        <div class="card-body" style="padding: 2.25rem;">
+          <form id="report-found-form">
+            
+            <div class="form-group">
+              <label class="form-label" for="found-title">
+                Item Title / Name <span class="required">*</span>
+              </label>
+              <input type="text" id="found-title" class="form-control" placeholder="e.g. Blue Hydro Flask Water Bottle" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="found-category">Category <span class="required">*</span></label>
+                <select id="found-category" class="form-select" required>
+                  <option value="">Select Category</option>
+                  <option value="Electronics">Electronics & Gadgets</option>
+                  <option value="Books & Stationery">Books & Stationery</option>
+                  <option value="ID & Cards">College ID & Identity Cards</option>
+                  <option value="Bottles & Containers">Bottles & Flasks</option>
+                  <option value="Keys & Accessories">Keys & Keychains</option>
+                  <option value="Bags & Wallets">Bags & Wallets</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="found-color">Item Color <span class="required">*</span></label>
+                <input type="text" id="found-color" class="form-control" placeholder="e.g. Ocean Blue / White" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="found-location">Found At (Location) <span class="required">*</span></label>
+                <input type="text" id="found-location" class="form-control" placeholder="e.g. Central Library, 2nd Floor Reading Room" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="found-date">Date Found <span class="required">*</span></label>
+                <input type="date" id="found-date" class="form-control" required value="2026-10-30">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="found-custody">Where is the item currently kept? <span class="required">*</span></label>
+              <select id="found-custody" class="form-select" required>
+                <option value="Security Gate 1">Deposited at Main Security Gate 1 (Recommended)</option>
+                <option value="Library Desk">Deposited at Central Library Helpdesk</option>
+                <option value="Cafeteria Office">Deposited at Cafeteria In-Charge Desk</option>
+                <option value="With Student">Currently in my custody (Will handover to security)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="found-description">Public Description <span class="required">*</span></label>
+              <textarea id="found-description" class="form-textarea" placeholder="Provide general details. Note: DO NOT reveal confidential markings like passwords, phone numbers, or exact contents to prevent fraudulent claims." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="found-verification-q">
+                Verification Question for Claimant
+              </label>
+              <input type="text" id="found-verification-q" class="form-control" placeholder="e.g. What sticker is on the bottle base? / Describe the key fob.">
+            </div>
+
+            <!-- Photograph Dropzone -->
+            <div class="form-group">
+              <label class="form-label">Item Photograph</label>
+              <div class="file-dropzone" id="file-dropzone">
+                <div class="dropzone-icon">📷</div>
+                <div class="dropzone-title">Click to upload or drag image here</div>
+                <div class="dropzone-subtitle">PNG, JPG, or WEBP (Max 5MB)</div>
+                <input type="file" id="item-image-input" accept="image/*" style="display: none;">
+              </div>
+              <div id="file-preview-container"></div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+              <button type="submit" class="btn btn-secondary btn-lg" style="flex: 1;">Publish Found Item & Generate QR Tag</button>
+              <a href="dashboard.html" class="btn btn-outline-secondary btn-lg">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container text-center" style="font-size: 0.8125rem; color: #A3B8BA;">
+      &copy; 2026 CampusFind 2.0. Academic PBL Submission &bull; B.Tech CSE
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/items.js"></script>
+</body>
+</html>
+

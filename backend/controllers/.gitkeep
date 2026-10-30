@@ -1,0 +1,9 @@
+# Backend Controllers
+Contains controllers handling HTTP requests and responses:
+- authController.js
+- itemController.js
+- claimController.js
+- userController.js
+- notificationController.js
+- adminController.js
+

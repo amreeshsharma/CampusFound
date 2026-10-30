@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="500" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#EFDECD" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FAF8F5"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10" y="-10" width="120%" height="120%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#004953" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="500" height="400" rx="24" fill="url(#bgGrad)"/>
+  <circle cx="420" cy="80" r="60" fill="#004953" fill-opacity="0.05"/>
+  <circle cx="80" cy="340" r="40" fill="#D99A36" fill-opacity="0.08"/>
+
+  <!-- Main Showcase Card (Item Card) -->
+  <g filter="url(#softShadow)">
+    <rect x="70" y="70" width="360" height="260" rx="16" fill="#FFFFFF"/>
+    <!-- Card Header / Image placeholder -->
+    <rect x="90" y="90" width="320" height="130" rx="12" fill="#FAF8F5"/>
+    <rect x="110" y="110" width="80" height="70" rx="10" fill="#EFDECD"/>
+    <circle cx="150" cy="140" r="16" fill="#004953"/>
+    
+    <!-- Item Details Mock Lines -->
+    <rect x="210" y="115" width="140" height="14" rx="4" fill="#004953"/>
+    <rect x="210" y="137" width="90" height="10" rx="3" fill="#687B7D"/>
+    
+    <!-- Tags -->
+    <rect x="210" y="157" width="60" height="20" rx="10" fill="#EAF6F0"/>
+    <text x="220" y="171" font-family="'Inter', sans-serif" font-size="10" font-weight="600" fill="#23865B">FOUND</text>
+    
+    <rect x="280" y="157" width="80" height="20" rx="10" fill="#EFDECD"/>
+    <text x="290" y="171" font-family="'Inter', sans-serif" font-size="10" font-weight="600" fill="#004953">LIBRARY</text>
+
+    <!-- Match Score Floating Pill -->
+    <rect x="90" y="235" width="320" height="45" rx="10" fill="#FAF8F5"/>
+    <circle cx="115" cy="257" r="12" fill="#23865B"/>
+    <path d="M110 257 L114 261 L121 253" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="135" y="261" font-family="'Inter', sans-serif" font-size="13" font-weight="600" fill="#183438">Smart Match: 94% Similarity</text>
+    <rect x="330" y="247" width="70" height="24" rx="12" fill="#004953"/>
+    <text x="345" y="263" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#FFFFFF">Claim</text>
+  </g>
+
+  <!-- Floating QR Code Badge -->
+  <g filter="url(#softShadow)">
+    <rect x="40" y="200" width="80" height="80" rx="12" fill="#FFFFFF"/>
+    <rect x="48" y="208" width="64" height="64" rx="8" fill="#FAF8F5"/>
+    <!-- Simulated QR Grid -->
+    <rect x="54" y="214" width="16" height="16" rx="3" fill="#004953"/>
+    <rect x="58" y="218" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="80" y="214" width="16" height="16" rx="3" fill="#004953"/>
+    <rect x="84" y="218" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="54" y="240" width="16" height="16" rx="3" fill="#004953"/>
+    <rect x="58" y="244" width="8" height="8" fill="#FFFFFF"/>
+    <rect x="76" y="236" width="6" height="6" fill="#D99A36"/>
+    <rect x="86" y="244" width="8" height="8" fill="#004953"/>
+  </g>
+
+  <!-- Verified Security Badge -->
+  <g filter="url(#softShadow)">
+    <rect x="330" y="40" width="140" height="44" rx="22" fill="#004953"/>
+    <circle cx="352" cy="62" r="12" fill="#D99A36"/>
+    <path d="M348 62 L351 65 L357 58" stroke="#004953" stroke-width="2" stroke-linecap="round"/>
+    <text x="372" y="66" font-family="'Inter', sans-serif" font-size="12" font-weight="600" fill="#FFFFFF">Verified Desk</text>
+  </g>
+</svg>
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration - CampusFind 2.0</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+</head>
+<body>
+
+  <!-- Minimal Header -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-brand">
+        <img src="../assets/logos/logo.svg" alt="CampusFind 2.0 Logo">
+      </a>
+      <div class="navbar-actions">
+        <span style="font-size: 0.875rem; color: var(--color-text-muted);">Already registered?</span>
+        <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="auth-wrapper">
+    <div class="auth-container">
+      <!-- Left Brand Banner -->
+      <div class="auth-banner">
+        <div>
+          <span class="section-tag" style="background-color: rgba(239, 222, 205, 0.2); color: #EFDECD;">Student Registration</span>
+          <h2>Join the Campus Safety Network</h2>
+          <p>Create a verified student account to report lost belongings, receive automated smart matches, and track recovery claims.</p>
+
+          <div class="auth-feature-list">
+            <div class="auth-feature-item">
+              <span class="auth-feature-icon">🛡️</span>
+              <span>College-verified institutional access</span>
+            </div>
+            <div class="auth-feature-item">
+              <span class="auth-feature-icon">⚡</span>
+              <span>Proactive match alerts within minutes</span>
+            </div>
+            <div class="auth-feature-item">
+              <span class="auth-feature-icon">📍</span>
+              <span>Direct security desk handover tracing</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size: 0.75rem; color: #A3B8BA; margin-top: 2rem;">
+          CampusFind 2.0 &bull; B.Tech CSE Web Technology PBL Project
+        </div>
+      </div>
+
+      <!-- Right Registration Form -->
+      <div class="auth-card">
+        <div class="auth-header">
+          <h3>Create your student account</h3>
+          <p>Provide your official college enrollment details.</p>
+        </div>
+
+        <form id="register-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="reg-name">
+                Full Name <span class="required">*</span>
+              </label>
+              <input type="text" id="reg-name" class="form-control" placeholder="e.g. Aman Sharma" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reg-student-id">
+                Roll / Student ID <span class="required">*</span>
+              </label>
+              <input type="text" id="reg-student-id" class="form-control" placeholder="e.g. 23CSE089" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="reg-email">
+                College Email <span class="required">*</span>
+              </label>
+              <input type="email" id="reg-email" class="form-control" placeholder="e.g. student@campus.edu" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reg-dept">Department <span class="required">*</span></label>
+              <select id="reg-dept" class="form-select" required>
+                <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Electronics & Communication">Electronics & Communication</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                <option value="Civil Engineering">Civil Engineering</option>
+                <option value="Electrical Engineering">Electrical Engineering</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="reg-password">
+                Password <span class="required">*</span>
+              </label>
+              <div class="input-password-wrapper">
+                <input type="password" id="reg-password" class="form-control" placeholder="Min. 6 characters" required autocomplete="new-password">
+                <button type="button" class="btn-toggle-password" aria-label="Toggle password visibility">👁</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="reg-confirm-password">
+                Confirm Password <span class="required">*</span>
+              </label>
+              <div class="input-password-wrapper">
+                <input type="password" id="reg-confirm-password" class="form-control" placeholder="Repeat password" required autocomplete="new-password">
+                <button type="button" class="btn-toggle-password" aria-label="Toggle password visibility">👁</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label class="form-checkbox-label">
+              <input type="checkbox" id="reg-terms" class="form-checkbox" required checked>
+              <span>I confirm these are my genuine college credentials and agree to campus guidelines.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg">Create Student Account</button>
+        </form>
+
+        <div class="auth-footer-text">
+          Already registered? <a href="login.html">Sign in here</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" style="padding-top: 1.5rem; padding-bottom: 1.5rem;">
+    <div class="container text-center" style="font-size: 0.8125rem; color: #A3B8BA;">
+      &copy; 2026 CampusFind 2.0. Academic PBL Submission.
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/auth.js"></script>
+</body>
+</html>
+

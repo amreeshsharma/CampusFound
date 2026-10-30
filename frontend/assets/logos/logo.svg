@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60" fill="none">
+  <!-- Brand Icon -->
+  <rect x="6" y="8" width="44" height="44" rx="12" fill="#004953" />
+  <circle cx="28" cy="27" r="10" stroke="#EFDECD" stroke-width="3.5" fill="none" />
+  <line x1="35.5" y1="34.5" x2="43" y2="42" stroke="#EFDECD" stroke-width="3.5" stroke-linecap="round" />
+  <circle cx="28" cy="27" r="4" fill="#EFDECD" />
+  <!-- Brand Name -->
+  <text x="60" y="38" font-family="'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif" font-size="24" font-weight="700" fill="#004953" letter-spacing="-0.5">
+    Campus<tspan fill="#D99A36">Find</tspan>
+  </text>
+  <rect x="195" y="16" width="36" height="18" rx="9" fill="#EFDECD" />
+  <text x="202" y="29" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="11" font-weight="700" fill="#004953">2.0</text>
+</svg>
+

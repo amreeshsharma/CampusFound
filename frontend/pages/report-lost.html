@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Lost Item - CampusFind 2.0</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-brand">
+        <img src="../assets/logos/logo.svg" alt="CampusFind 2.0 Logo">
+      </a>
+
+      <nav class="nav-menu">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="lost-items.html" class="nav-link">Lost Items</a>
+        <a href="found-items.html" class="nav-link">Found Items</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <!-- Rendered by navbar.js -->
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content section" style="padding-top: 2rem; background-color: var(--background-color);">
+    <div class="container" style="max-width: 800px;">
+      <div style="margin-bottom: 2rem;">
+        <span class="badge badge-lost" style="margin-bottom: 0.5rem;">REPORT LOSS</span>
+        <h1>Report a Lost Belonging</h1>
+        <p>Our rule-based engine will compare these details against all found reports in real-time.</p>
+      </div>
+
+      <div class="card" style="box-shadow: var(--shadow-md);">
+        <div class="card-body" style="padding: 2.25rem;">
+          <form id="report-lost-form">
+            
+            <div class="form-group">
+              <label class="form-label" for="lost-title">
+                Item Title / Name <span class="required">*</span>
+              </label>
+              <input type="text" id="lost-title" class="form-control" placeholder="e.g. Casio Scientific Calculator fx-991EX" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="lost-category">Category <span class="required">*</span></label>
+                <select id="lost-category" class="form-select" required>
+                  <option value="">Select Category</option>
+                  <option value="Electronics">Electronics & Gadgets</option>
+                  <option value="Books & Stationery">Books & Stationery</option>
+                  <option value="ID & Cards">College ID & Identity Cards</option>
+                  <option value="Bottles & Containers">Bottles & Flasks</option>
+                  <option value="Keys & Accessories">Keys & Keychains</option>
+                  <option value="Bags & Wallets">Bags & Wallets</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="lost-color">Primary Color <span class="required">*</span></label>
+                <input type="text" id="lost-color" class="form-control" placeholder="e.g. Matte Black / Navy Blue" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="lost-location">Approximate Campus Location <span class="required">*</span></label>
+                <input type="text" id="lost-location" class="form-control" placeholder="e.g. Mechanical Lab 3 / Library 2nd Floor" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="lost-date">Date Misplaced <span class="required">*</span></label>
+                <input type="date" id="lost-date" class="form-control" required value="2026-10-30">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="lost-description">Detailed Description <span class="required">*</span></label>
+              <textarea id="lost-description" class="form-textarea" placeholder="Describe the item condition, brand, stickers, unique features..." required></textarea>
+            </div>
+
+            <!-- Drag & Drop Photograph Dropzone -->
+            <div class="form-group">
+              <label class="form-label">Reference Photograph</label>
+              <div class="file-dropzone" id="file-dropzone">
+                <div class="dropzone-icon">📷</div>
+                <div class="dropzone-title">Click to upload or drag image here</div>
+                <div class="dropzone-subtitle">PNG, JPG, or WEBP (Max 5MB)</div>
+                <input type="file" id="item-image-input" accept="image/*" style="display: none;">
+              </div>
+              <div id="file-preview-container"></div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="lost-contact">Emergency Contact Phone</label>
+                <input type="tel" id="lost-contact" class="form-control" placeholder="+91 98765 43210">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="lost-roll">Your Student Roll No.</label>
+                <input type="text" id="lost-roll" class="form-control" placeholder="e.g. 23CSE089">
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+              <button type="submit" class="btn btn-primary btn-lg" style="flex: 1;">Publish Lost Item Report</button>
+              <a href="dashboard.html" class="btn btn-outline-secondary btn-lg">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container text-center" style="font-size: 0.8125rem; color: #A3B8BA;">
+      &copy; 2026 CampusFind 2.0. Academic PBL Submission &bull; B.Tech CSE
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/items.js"></script>
+</body>
+</html>
+

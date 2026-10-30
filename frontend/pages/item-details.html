@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Item Details - CampusFind 2.0</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/items.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-brand">
+        <img src="../assets/logos/logo.svg" alt="CampusFind 2.0 Logo">
+      </a>
+
+      <nav class="nav-menu">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="lost-items.html" class="nav-link">Lost Items</a>
+        <a href="found-items.html" class="nav-link">Found Items</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <!-- Rendered by navbar.js -->
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content section" style="padding-top: 2rem;">
+    <div class="container">
+      <!-- Back Navigation -->
+      <div style="margin-bottom: 1.25rem;">
+        <a href="javascript:history.back()" style="font-size: 0.875rem; display: inline-flex; align-items: center; gap: 0.35rem; color: var(--color-text-muted);">
+          <span>←</span> Back to Catalog
+        </a>
+      </div>
+
+      <!-- Item Details Two-Column Layout -->
+      <div class="item-details-layout" id="item-details-view">
+        <!-- Left: Image Gallery & QR Box -->
+        <div class="item-gallery">
+          <div class="item-gallery-main">
+            <img src="../assets/images/hero-illustration.svg" alt="Item Image" id="detail-image">
+          </div>
+
+          <!-- QR Verification Box for Custody -->
+          <div class="qr-code-box" id="detail-qr-box">
+            <div style="font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem;">
+              📱 QR Custody Verification Tag
+            </div>
+            <p style="font-size: 0.75rem; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+              Campus security can scan this token to confirm handover authorization.
+            </p>
+            <!-- Simulated QR SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="110" height="110" style="margin: 0 auto 0.5rem; display:block;">
+              <rect width="100" height="100" fill="#FFFFFF" rx="8"/>
+              <rect x="10" y="10" width="25" height="25" fill="#004953" rx="4"/>
+              <rect x="15" y="15" width="15" height="15" fill="#FFFFFF" rx="2"/>
+              <rect x="19" y="19" width="7" height="7" fill="#004953"/>
+              
+              <rect x="65" y="10" width="25" height="25" fill="#004953" rx="4"/>
+              <rect x="70" y="15" width="15" height="15" fill="#FFFFFF" rx="2"/>
+              <rect x="74" y="19" width="7" height="7" fill="#004953"/>
+
+              <rect x="10" y="65" width="25" height="25" fill="#004953" rx="4"/>
+              <rect x="15" y="70" width="15" height="15" fill="#FFFFFF" rx="2"/>
+              <rect x="19" y="74" width="7" height="7" fill="#004953"/>
+
+              <rect x="45" y="20" width="10" height="10" fill="#004953"/>
+              <rect x="45" y="45" width="12" height="12" fill="#D99A36"/>
+              <rect x="70" y="65" width="10" height="25" fill="#004953"/>
+              <rect x="45" y="75" width="12" height="12" fill="#004953"/>
+            </svg>
+            <div style="font-family: var(--font-family-mono); font-weight: 700; font-size: 0.8125rem; color: var(--primary-color);" id="detail-qr-token">
+              QR-FND-88219
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Information & Action -->
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+            <span class="badge badge-found" id="detail-type-badge">FOUND</span>
+            <span class="item-category-pill" id="detail-category">Bottles & Containers</span>
+          </div>
+
+          <h1 style="font-size: 1.875rem; margin-bottom: 1rem;" id="detail-title">Blue Hydro Flask Water Bottle</h1>
+
+          <div class="card" style="margin-bottom: 1.5rem; background-color: var(--color-bg-light); border: 1px solid var(--color-border-subtle);">
+            <div class="card-body" style="padding: 1rem 1.25rem;">
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; font-size: 0.875rem;">
+                <div>
+                  <span style="color: var(--color-text-muted);">Campus Location:</span>
+                  <div style="font-weight: 600;" id="detail-location">Central Library, 2nd Floor</div>
+                </div>
+                <div>
+                  <span style="color: var(--color-text-muted);">Date Logged:</span>
+                  <div style="font-weight: 600;" id="detail-date">Oct 28, 2026</div>
+                </div>
+                <div>
+                  <span style="color: var(--color-text-muted);">Color:</span>
+                  <div style="font-weight: 600;" id="detail-color">Ocean Blue</div>
+                </div>
+                <div>
+                  <span style="color: var(--color-text-muted);">Custody Status:</span>
+                  <div style="font-weight: 600; color: var(--color-success);" id="detail-custody">At Security Desk (Gate 1)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Public Item Description</h3>
+          <p style="line-height: 1.7; margin-bottom: 1.5rem;" id="detail-description">
+            Found on study desk #14 near computer terminals. Metallic 32oz bottle with stickers. Please identify specific stickers or engraved initials to claim.
+          </p>
+
+          <!-- Claim or Matching Recommendation Button -->
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-lg" id="detail-claim-btn" style="flex: 1;">
+              <span>✋</span> Submit Ownership Claim
+            </button>
+            <button class="btn btn-outline-secondary btn-lg" id="detail-match-btn" onclick="openMatchDetailsModal()">
+              <span>🎯</span> Inspect Rule Match Score
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Smart Match Breakdown Modal -->
+  <div class="modal-overlay" id="match-explanation-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Rule-Based Match Breakdown</h3>
+        <button class="modal-close" onclick="closeModal('match-explanation-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="text-align: center; margin-bottom: 1.25rem;">
+          <span class="match-score-pill match-high" id="match-score-display" style="font-size: 1rem; padding: 0.4rem 1rem;">92% Match Score</span>
+          <p style="font-size: 0.8125rem; margin-top: 0.5rem;">
+            Calculated transparently based on academic PBL weighted similarity criteria.
+          </p>
+        </div>
+        <ul id="match-reasons-list" style="font-size: 0.875rem;"></ul>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" onclick="closeModal('match-explanation-modal')">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Claim Submission Modal -->
+  <div class="modal-overlay" id="claim-submission-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <span class="badge badge-pending">OWNERSHIP VERIFICATION</span>
+          <h3 class="modal-title">Submit Verification Details</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('claim-submission-modal')">&times;</button>
+      </div>
+      <form id="claim-submission-form">
+        <div class="modal-body">
+          <input type="hidden" id="claim-item-id-input" value="1">
+          <p style="font-size: 0.875rem; margin-bottom: 1rem;">
+            Claiming: <strong id="claim-modal-item-title" style="color: var(--primary-color);">Blue Hydro Flask Water Bottle</strong>
+          </p>
+          <div class="form-group">
+            <label class="form-label" for="claim-verification-details">
+              Hidden Identifying Marks / Verification Details <span class="required">*</span>
+            </label>
+            <textarea id="claim-verification-details" class="form-textarea" placeholder="Detail any stickers, dents, custom markings, or serial numbers that prove ownership..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="claim-contact-phone">Student Phone Number</label>
+            <input type="tel" id="claim-contact-phone" class="form-control" placeholder="+91 98765 43210">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="closeModal('claim-submission-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm">Confirm Claim</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container text-center" style="font-size: 0.8125rem; color: #A3B8BA;">
+      &copy; 2026 CampusFind 2.0. Academic PBL Submission &bull; B.Tech CSE
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/items.js"></script>
+  <script src="../js/matching.js"></script>
+  <script src="../js/claims.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,9 @@
+# Backend Routes
+Contains Express route endpoints:
+- authRoutes.js
+- itemRoutes.js
+- claimRoutes.js
+- userRoutes.js
+- notificationRoutes.js
+- adminRoutes.js
+

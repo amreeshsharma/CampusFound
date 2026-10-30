@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard - CampusFind 2.0</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/items.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <div class="container">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button id="sidebar-toggle-btn" class="btn btn-outline-secondary btn-sm" style="display: none; padding: 0.4rem 0.6rem;" aria-label="Toggle Sidebar Menu">☰</button>
+        <a href="../index.html" class="navbar-brand">
+          <img src="../assets/logos/logo.svg" alt="CampusFind 2.0 Logo">
+        </a>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="lost-items.html" class="nav-link">Lost Items</a>
+        <a href="found-items.html" class="nav-link">Found Items</a>
+        <a href="dashboard.html" class="nav-link active">Dashboard</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <!-- Rendered by navbar.js -->
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar" id="dashboard-avatar">AS</div>
+        <div style="overflow: hidden;">
+          <div class="sidebar-user-name" id="dashboard-user-name">Aman Sharma</div>
+          <div class="sidebar-user-role" id="dashboard-user-role">CSE &bull; 23CSE089</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link active">
+          <span>📊</span> Overview
+        </a>
+        <a href="lost-items.html" class="sidebar-link">
+          <span>🔍</span> Lost Items Catalog
+        </a>
+        <a href="found-items.html" class="sidebar-link">
+          <span>📦</span> Found Items Catalog
+        </a>
+        <a href="report-lost.html" class="sidebar-link">
+          <span>📝</span> Report Lost Item
+        </a>
+        <a href="report-found.html" class="sidebar-link">
+          <span>🎁</span> Report Found Item
+        </a>
+        <a href="my-claims.html" class="sidebar-link">
+          <span>📑</span> My Claims
+          <span class="sidebar-badge">1</span>
+        </a>
+        <a href="notifications.html" class="sidebar-link">
+          <span>🔔</span> Notifications
+          <span class="sidebar-badge">2</span>
+        </a>
+        <a href="profile.html" class="sidebar-link">
+          <span>👤</span> Profile & Settings
+        </a>
+        <a href="#" onclick="handleLogout(event)" class="sidebar-link" style="color: var(--color-error); margin-top: auto;">
+          <span>🚪</span> Sign Out
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Dashboard Workspace -->
+    <main class="dashboard-content">
+      <div class="dashboard-header">
+        <div>
+          <h1>Student Workspace</h1>
+          <p>Monitor your active reports, smart algorithm suggestions, and claim progress.</p>
+        </div>
+        <div class="dashboard-actions">
+          <a href="report-lost.html" class="btn btn-outline btn-sm">Report Lost</a>
+          <a href="report-found.html" class="btn btn-primary btn-sm">Report Found</a>
+        </div>
+      </div>
+
+      <!-- KPI Stat Grid -->
+      <section class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-primary">📁</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-total-reported">6</div>
+            <div class="stat-label">Total Reports</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-danger">🔍</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-total-lost">2</div>
+            <div class="stat-label">Active Lost Items</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-success">📦</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-total-found">3</div>
+            <div class="stat-label">Found Belongings</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-warning">⚡</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-total-matches">2</div>
+            <div class="stat-label">Possible Matches</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-primary">📑</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-total-claims">1</div>
+            <div class="stat-label">Claims in Review</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dashboard Two Column Grid -->
+      <div class="dashboard-grid-2">
+        <!-- Left Column: Match Suggestions & Activity -->
+        <div>
+          <!-- Smart Match Suggestion Alert Card -->
+          <div style="margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <h3 style="font-size: 1.15rem;">🎯 Rule-Based Match Alert</h3>
+              <span class="badge badge-match">NEW SUGGESTION</span>
+            </div>
+            <div id="suggested-matches-container">
+              <!-- Rendered via dashboard.js -->
+            </div>
+          </div>
+
+          <!-- Recent Activity Log Card -->
+          <div class="card">
+            <div class="card-header">
+              <h3 style="font-size: 1.1rem;">Recent Timeline & Audit Trail</h3>
+              <a href="notifications.html" style="font-size: 0.8125rem;">View All</a>
+            </div>
+            <div class="card-body">
+              <div class="activity-list" id="recent-activity-list">
+                <!-- Rendered via dashboard.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Quick Shortcuts & Security Info -->
+        <div>
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+              <h3 style="font-size: 1.05rem;">Quick Operations</h3>
+            </div>
+            <div class="card-body" style="display: flex; flex-direction: column; gap: 0.625rem;">
+              <a href="report-lost.html" class="btn btn-outline btn-block btn-sm" style="justify-content: flex-start;">
+                <span>📝</span> Report a Lost Belonging
+              </a>
+              <a href="report-found.html" class="btn btn-secondary btn-block btn-sm" style="justify-content: flex-start;">
+                <span>🎁</span> Hand In / Report Found Item
+              </a>
+              <a href="found-items.html" class="btn btn-outline-secondary btn-block btn-sm" style="justify-content: flex-start;">
+                <span>📱</span> Check QR-Tagged Items
+              </a>
+              <a href="my-claims.html" class="btn btn-outline-secondary btn-block btn-sm" style="justify-content: flex-start;">
+                <span>📑</span> Track Ownership Claims
+              </a>
+            </div>
+          </div>
+
+          <!-- Security Desk Contact Card -->
+          <div class="card" style="background-color: #FAF4ED; border: 1.5px solid var(--secondary-color);">
+            <div class="card-body">
+              <h4 style="font-size: 0.95rem; margin-bottom: 0.35rem;">🏢 Campus Custody Desk</h4>
+              <p style="font-size: 0.8125rem; margin-bottom: 0.75rem;">
+                Physical items verified through QR codes are stored at Security Command (Gate 1).
+              </p>
+              <div style="font-size: 0.75rem; color: var(--primary-color); font-weight: 600;">
+                <div>📞 Desk Ext: 1001</div>
+                <div>⏰ Mon-Sat: 8:00 AM - 8:00 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="container text-center" style="font-size: 0.8125rem; color: #A3B8BA;">
+      &copy; 2026 CampusFind 2.0. Academic PBL Submission &bull; B.Tech CSE
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>
+

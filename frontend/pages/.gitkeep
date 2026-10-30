@@ -1,0 +1,15 @@
+# Frontend Pages
+This folder will contain all page views for CampusFind 2.0:
+- login.html
+- register.html
+- dashboard.html
+- lost-items.html
+- found-items.html
+- report-lost.html
+- report-found.html
+- item-details.html
+- my-claims.html
+- notifications.html
+- profile.html
+- admin-dashboard.html
+
