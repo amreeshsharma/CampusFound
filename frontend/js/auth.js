@@ -1,6 +1,7 @@
 /**
  * CampusFind 2.0 - Authentication UI Controller
  * Connected to Express REST API & MySQL Backend with JWT + HTTP-only cookies
+ * Includes seamless offline fallback for file:// browser previews
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -58,7 +59,31 @@ function setupLoginForm() {
         }
       }, 700);
     } catch (err) {
-      showToast(err.message, 'error');
+      console.warn('Login network or server notice:', err);
+
+      // Graceful fallback if backend is offline or blocked on file:// protocol
+      if (err.message.includes('fetch') || err.message.includes('Network') || window.location.protocol === 'file:') {
+        showToast('Connecting in Offline Preview Mode (To use live MySQL, visit http://localhost:5000)', 'warning', 5000);
+        
+        const role = email.toLowerCase().includes('admin') ? 'admin' : 'student';
+        const name = role === 'admin' ? 'Campus Security Admin' : 'Rahul Sharma';
+
+        const mockUser = {
+          id: role === 'admin' ? 3 : 1,
+          name: name,
+          email: email,
+          role: role,
+          department: 'Computer Science & Engineering',
+          student_id: '23CSE089'
+        };
+
+        setUserSession(mockUser, 'preview_jwt_token_local');
+        setTimeout(() => {
+          window.location.href = role === 'admin' ? 'admin-dashboard.html' : 'dashboard.html';
+        }, 1000);
+      } else {
+        showToast(err.message, 'error');
+      }
     } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalBtnText;
@@ -108,7 +133,7 @@ function setupRegisterForm() {
         headers: {
           'Content-Type': 'application/json'
         },
-        credentials: 'include', // Receive and store HTTP-only JWT cookie
+        credentials: 'include',
         body: JSON.stringify({
           name,
           email,
@@ -132,7 +157,25 @@ function setupRegisterForm() {
         window.location.href = 'dashboard.html';
       }, 800);
     } catch (err) {
-      showToast(err.message, 'error');
+      console.warn('Registration network or server notice:', err);
+
+      if (err.message.includes('fetch') || err.message.includes('Network') || window.location.protocol === 'file:') {
+        showToast('Registered in Offline Preview Mode. (To use live MySQL, visit http://localhost:5000)', 'warning', 5000);
+        const newUser = {
+          id: Math.floor(Math.random() * 900) + 100,
+          name,
+          student_id,
+          email,
+          department,
+          role: 'student'
+        };
+        setUserSession(newUser, 'preview_jwt_token_local');
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 1000);
+      } else {
+        showToast(err.message, 'error');
+      }
     } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalBtnText;

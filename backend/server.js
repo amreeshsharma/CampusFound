@@ -1,6 +1,7 @@
 /**
  * CampusFind 2.0 - Server Entry Point
  * Smart Campus Lost & Found Management Platform
+ * Serves both the REST API backend and the Frontend web application
  */
 
 const express = require('express');
@@ -39,7 +40,8 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin) || origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
+    // Allow non-browser agents (Postman, curl), file:// origins ('null'), or defined local ports
+    if (!origin || origin === 'null' || allowedOrigins.includes(origin) || origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
       return callback(null, true);
     }
     return callback(null, true);
@@ -55,8 +57,12 @@ app.use(cookieParser());
 // Serve uploaded item images as static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Root Information Endpoint
-app.get('/', (req, res) => {
+// Serve Frontend Web Application as static files
+const frontendDir = path.join(__dirname, '..', 'frontend');
+app.use(express.static(frontendDir));
+
+// API Overview Endpoint
+app.get('/api', (req, res) => {
   res.status(200).json({
     project: 'CampusFind 2.0',
     description: 'Smart Campus Lost & Found Management Platform API',
@@ -83,11 +89,16 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/items', itemRoutes);
 app.use('/api/matches', matchingRoutes);
 
+// Fallback for frontend root: serve index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(frontendDir, 'index.html'));
+});
+
 // 404 Handler for undefined API routes
-app.use((req, res, next) => {
+app.use('/api', (req, res) => {
   res.status(404).json({
     success: false,
-    message: `API route '${req.originalUrl}' not found.`
+    message: `API endpoint '${req.originalUrl}' not found.`
   });
 });
 
@@ -97,9 +108,10 @@ app.use(errorHandler);
 // Start the Express Server
 app.listen(PORT, async () => {
   console.log(`====================================================`);
-  console.log(` CampusFind 2.0 Backend Server Running`);
+  console.log(` CampusFind 2.0 Web Application & API Running!`);
+  console.log(` Web App URL : http://localhost:${PORT}`);
   console.log(` Environment : ${process.env.NODE_ENV || 'development'}`);
-  console.log(` Server URL  : http://localhost:${PORT}`);
+  console.log(` Health API  : http://localhost:${PORT}/api/health`);
   console.log(` Auth APIs   : http://localhost:${PORT}/api/auth`);
   console.log(` Items API   : http://localhost:${PORT}/api/items`);
   console.log(` Matches API : http://localhost:${PORT}/api/matches`);

@@ -3,11 +3,20 @@
  * Manages API endpoints and system constants
  */
 
+const getBaseServerUrl = () => {
+  if (typeof window !== 'undefined' && window.location.origin && window.location.origin.includes(':5000')) {
+    return window.location.origin;
+  }
+  return 'http://localhost:5000';
+};
+
+const SERVER_BASE = getBaseServerUrl();
+
 const CONFIG = {
   // Base API configuration (matches backend PORT 5000)
-  API_BASE_URL: 'http://localhost:5000/api',
-  SERVER_URL: 'http://localhost:5000',
-  UPLOAD_URL: 'http://localhost:5000/uploads',
+  API_BASE_URL: `${SERVER_BASE}/api`,
+  SERVER_URL: SERVER_BASE,
+  UPLOAD_URL: `${SERVER_BASE}/uploads`,
 
   // Local Storage Keys
   STORAGE_KEYS: {
@@ -44,4 +53,3 @@ const CONFIG = {
 
 // Freeze configuration object to prevent runtime mutations
 Object.freeze(CONFIG);
-
