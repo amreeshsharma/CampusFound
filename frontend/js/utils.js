@@ -61,8 +61,12 @@ function getUserSession() {
   try {
     const rawUser = localStorage.getItem(CONFIG.STORAGE_KEYS.USER_DATA);
     const token = localStorage.getItem(CONFIG.STORAGE_KEYS.AUTH_TOKEN);
-    if (!token || !rawUser) return null;
-    return { user: JSON.parse(rawUser), token };
+    if (!token || !rawUser || token === 'undefined' || token === 'null' || rawUser === 'undefined' || rawUser === 'null') {
+      return null;
+    }
+    const user = JSON.parse(rawUser);
+    if (!user || typeof user !== 'object') return null;
+    return { user, token };
   } catch (e) {
     return null;
   }

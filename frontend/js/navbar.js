@@ -1,5 +1,5 @@
 /**
- * CampusFind 2.0 - Navbar Controller
+ * CampusFind - Navbar Controller
  * Handles mobile hamburger toggle, active link highlights, user dropdown, real API logout
  */
 
@@ -48,6 +48,15 @@ function updateNavbarAuth() {
   const pagesPrefix = isPagesFolder ? '' : 'pages/';
 
   if (session && session.user) {
+    // If user is admin, dynamically route any "Dashboard" nav links to admin-dashboard.html
+    if (session.user.role === 'admin') {
+      const dashboardNavLinks = document.querySelectorAll('.nav-menu a[href*="dashboard.html"]');
+      dashboardNavLinks.forEach(link => {
+        link.href = `${pagesPrefix}admin-dashboard.html`;
+        link.textContent = 'Admin Console';
+      });
+    }
+
     const initials = session.user.name
       ? session.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
       : 'U';
@@ -89,15 +98,23 @@ function updateNavbarAuth() {
         }
       })
       .catch(() => {});
+  } else {
+    // If unauthenticated, ensure navbar shows Sign In and Register options on non-auth pages
+    const isAuthPage = window.location.pathname.includes('login.html') || window.location.pathname.includes('register.html');
+    if (!isAuthPage) {
+      authContainer.innerHTML = `
+        <a href="${pagesPrefix}login.html" class="btn btn-outline btn-sm">Sign In</a>
+        <a href="${pagesPrefix}register.html" class="btn btn-primary btn-sm">Get Started</a>
+      `;
+    }
   }
 }
 
 async function handleLogout(e) {
   if (e) e.preventDefault();
   try {
-    await fetch(`${CONFIG.API_BASE_URL}/auth/logout`, {
-      method: 'POST',
-      credentials: 'include'
+    await authFetch(`${CONFIG.API_BASE_URL}/auth/logout`, {
+      method: 'POST'
     });
   } catch (err) {
     console.warn('Logout API network notice:', err.message);

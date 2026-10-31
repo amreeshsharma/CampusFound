@@ -1,6 +1,6 @@
 /**
- * CampusFind 2.0 - JWT Authentication Middleware
- * Protects private routes by verifying tokens from HTTP-only cookies or Authorization headers
+ * CampusFind - JWT Authentication Middleware
+ * Protects private routes by verifying tokens from Authorization headers or HTTP-only cookies
  */
 
 const jwt = require('jsonwebtoken');
@@ -8,26 +8,61 @@ const { db } = require('../config/db');
 
 const authMiddleware = async (req, res, next) => {
   try {
-    let token = null;
+    const candidateTokens = [];
 
-    // 1. Check HTTP-only cookie
+    // 1. Explicit Authorization Bearer header (sent by modern client via authFetch)
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      const headerToken = req.headers.authorization.split(' ')[1];
+      if (headerToken && headerToken !== 'null' && headerToken !== 'undefined') {
+        candidateTokens.push(headerToken);
+      }
+    }
+
+    // 2. HTTP-only cookie
     if (req.cookies && req.cookies.token) {
-      token = req.cookies.token;
-    }
-    // 2. Check Authorization Bearer header (for Postman / API clients)
-    else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
-      token = req.headers.authorization.split(' ')[1];
+      if (!candidateTokens.includes(req.cookies.token)) {
+        candidateTokens.push(req.cookies.token);
+      }
     }
 
-    if (!token) {
+    if (candidateTokens.length === 0) {
       return res.status(401).json({
         success: false,
         message: 'Access denied. No authentication token provided. Please sign in.'
       });
     }
 
-    // Verify JWT
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'campusfind_super_secure_jwt_secret_key_change_in_production_2026');
+    let decoded = null;
+    let lastError = null;
+
+    // Verify token candidates
+    for (const token of candidateTokens) {
+      try {
+        decoded = jwt.verify(
+          token,
+          process.env.JWT_SECRET || 'campusfind_super_secure_jwt_secret_key_change_in_production_2026'
+        );
+        if (decoded && decoded.id) {
+          break;
+        }
+      } catch (err) {
+        lastError = err;
+      }
+    }
+
+    if (!decoded || !decoded.id) {
+      if (lastError && lastError.name === 'TokenExpiredError') {
+        return res.status(401).json({
+          success: false,
+          message: 'Authentication session expired. Please sign in again.'
+        });
+      }
+
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid authentication token.'
+      });
+    }
 
     // Fetch user from MySQL database (omitting password hash)
     const [users] = await db.query(
@@ -46,16 +81,9 @@ const authMiddleware = async (req, res, next) => {
     req.user = users[0];
     next();
   } catch (error) {
-    if (error.name === 'TokenExpiredError') {
-      return res.status(401).json({
-        success: false,
-        message: 'Authentication session expired. Please sign in again.'
-      });
-    }
-
-    return res.status(401).json({
+    return res.status(500).json({
       success: false,
-      message: 'Invalid authentication token.'
+      message: 'Server error during authentication verification.'
     });
   }
 };

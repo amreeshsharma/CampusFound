@@ -20,10 +20,13 @@ async function initDashboard() {
     return;
   }
 
-  // If administrator visits this page, seamlessly guide to admin console
+  // If administrator visits this page, seamlessly guide to admin console unless explicitly previewing
   if (session.user.role === 'admin') {
-    window.location.replace('admin-dashboard.html');
-    return;
+    const urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.get('student_view')) {
+      window.location.replace('admin-dashboard.html');
+      return;
+    }
   }
 
   // Populate user header info
