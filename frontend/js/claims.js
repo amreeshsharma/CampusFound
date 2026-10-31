@@ -15,11 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
 function openClaimModal(itemId, itemTitle) {
   // Check if user is logged in
   const session = getUserSession();
+  const isPagesFolder = window.location.pathname.includes('/pages/');
+  const loginUrl = isPagesFolder ? 'login.html' : 'pages/login.html';
+
   if (!session) {
     showToast('Please sign in with your college account to submit an ownership claim.', 'warning', 4000);
     setTimeout(() => {
-      window.location.href = `login.html?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
-    }, 1500);
+      window.location.href = `${loginUrl}?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`;
+    }, 1200);
     return;
   }
 
@@ -71,12 +74,11 @@ function setupClaimForm() {
     }
 
     try {
-      const res = await fetch(`${CONFIG.API_BASE_URL}/claims`, {
+      const res = await authFetch(`${CONFIG.API_BASE_URL}/claims`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        credentials: 'include',
         body: JSON.stringify({
           item_id: itemId,
           verification_details: verificationDetails
@@ -88,7 +90,8 @@ function setupClaimForm() {
       if (!res.ok) {
         if (res.status === 401) {
           showToast('Session expired. Please log in again.', 'warning');
-          setTimeout(() => { window.location.href = 'login.html'; }, 1500);
+          clearUserSession();
+          setTimeout(() => { window.location.href = 'login.html'; }, 1000);
           return;
         }
         showToast(result.message || 'Failed to submit ownership claim.', 'error');
@@ -158,11 +161,10 @@ async function loadMyClaims() {
   `;
 
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/claims/my-claims`, {
-      credentials: 'include'
-    });
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/claims/my-claims`);
 
     if (res.status === 401) {
+      clearUserSession();
       showToast('Please sign in to view your claims.', 'warning');
       window.location.href = 'login.html';
       return;

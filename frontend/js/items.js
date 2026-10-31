@@ -384,12 +384,8 @@ async function handleItemFormSubmit(e, itemType) {
   }
 
   try {
-    const response = await fetch(`${CONFIG.API_BASE_URL}/items`, {
+    const response = await authFetch(`${CONFIG.API_BASE_URL}/items`, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${session.token}`
-      },
-      credentials: 'include',
       body: formData
     });
 

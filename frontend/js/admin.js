@@ -64,9 +64,7 @@ function initAdminTabs() {
  */
 async function loadAdminStats() {
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/dashboard/admin-stats`, {
-      credentials: 'include'
-    });
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/dashboard/admin-stats`);
 
     if (!res.ok) throw new Error('Failed to fetch admin statistics.');
 
@@ -127,9 +125,7 @@ async function loadAdminClaims() {
   if (!tbody) return;
 
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/claims`, {
-      credentials: 'include'
-    });
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/claims`);
 
     if (!res.ok) throw new Error('Could not fetch claims.');
 
@@ -212,10 +208,9 @@ async function handleAdminApproveClaim(claimId) {
 
   try {
     const rawId = typeof claimId === 'string' && claimId.startsWith('CLM-') ? claimId.replace('CLM-', '') : claimId;
-    const res = await fetch(`${CONFIG.API_BASE_URL}/claims/${rawId}/status`, {
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/claims/${rawId}/status`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
       body: JSON.stringify({
         status: 'approved',
         admin_remarks: remarks
@@ -246,10 +241,9 @@ async function handleAdminRejectClaim(claimId) {
 
   try {
     const rawId = typeof claimId === 'string' && claimId.startsWith('CLM-') ? claimId.replace('CLM-', '') : claimId;
-    const res = await fetch(`${CONFIG.API_BASE_URL}/claims/${rawId}/status`, {
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/claims/${rawId}/status`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
       body: JSON.stringify({
         status: 'rejected',
         admin_remarks: reason
@@ -278,7 +272,7 @@ async function loadAdminItems() {
   if (!tbody) return;
 
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/items`);
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/items`);
     if (!res.ok) throw new Error('Could not fetch items.');
 
     const result = await res.json();
@@ -338,9 +332,8 @@ async function handleAdminDeleteItem(itemId) {
   }
 
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/items/${itemId}`, {
-      method: 'DELETE',
-      credentials: 'include'
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/items/${itemId}`, {
+      method: 'DELETE'
     });
 
     const result = await res.json();
@@ -365,9 +358,7 @@ async function loadAdminUsers() {
   if (!tbody) return;
 
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/users`, {
-      credentials: 'include'
-    });
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/users`);
 
     if (!res.ok) throw new Error('Could not fetch users.');
 
@@ -416,7 +407,7 @@ async function loadAdminCategories() {
   if (!tbody) return;
 
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/categories`);
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/categories`);
     if (!res.ok) throw new Error('Could not fetch categories.');
 
     const result = await res.json();
@@ -456,10 +447,9 @@ function setupAddCategoryForm() {
     }
 
     try {
-      const res = await fetch(`${CONFIG.API_BASE_URL}/categories`, {
+      const res = await authFetch(`${CONFIG.API_BASE_URL}/categories`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
         body: JSON.stringify({ category_name, description })
       });
 
@@ -488,9 +478,7 @@ async function initAdminCharts() {
   }
 
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/dashboard/analytics`, {
-      credentials: 'include'
-    });
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/dashboard/analytics`);
 
     if (!res.ok) return;
 

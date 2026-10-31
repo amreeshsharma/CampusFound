@@ -78,6 +78,24 @@ function clearUserSession() {
   localStorage.removeItem(CONFIG.STORAGE_KEYS.AUTH_TOKEN);
 }
 
+// --- Authenticated Fetch Helper ---
+// Automatically injects Authorization header with Bearer token AND credentials: 'include'
+// Solves cross-port cookie blocking, preview resilience, and session continuity
+function authFetch(url, options = {}) {
+  const session = getUserSession();
+  const headers = { ...(options.headers || {}) };
+
+  if (session && session.token) {
+    headers['Authorization'] = `Bearer ${session.token}`;
+  }
+
+  return fetch(url, {
+    ...options,
+    headers,
+    credentials: 'include'
+  });
+}
+
 // --- Modal Helper Functions ---
 function openModal(modalId) {
   const modal = document.getElementById(modalId);

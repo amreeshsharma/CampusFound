@@ -5,10 +5,30 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  checkAlreadyLoggedIn();
   setupLoginForm();
   setupRegisterForm();
   setupPasswordToggles();
 });
+
+// If the user already has an active session, redirect to their workspace directly
+function checkAlreadyLoggedIn() {
+  const session = getUserSession();
+  if (session && session.user && session.token) {
+    const isLoginPage = window.location.pathname.includes('login.html');
+    const isRegisterPage = window.location.pathname.includes('register.html');
+    if (isLoginPage || isRegisterPage) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirect = urlParams.get('redirect');
+      if (redirect) {
+        window.location.replace(redirect);
+        return;
+      }
+      const target = session.user.role === 'admin' ? 'admin-dashboard.html' : 'dashboard.html';
+      window.location.replace(target);
+    }
+  }
+}
 
 // Setup Login Form with Real Backend API Integration
 function setupLoginForm() {

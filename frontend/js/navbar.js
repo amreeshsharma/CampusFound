@@ -77,7 +77,7 @@ function updateNavbarAuth() {
     `;
 
     // Fetch unread count for navbar badge
-    fetch(`${CONFIG.API_BASE_URL}/notifications/unread-count`, { credentials: 'include' })
+    authFetch(`${CONFIG.API_BASE_URL}/notifications/unread-count`)
       .then(res => res.json())
       .then(result => {
         if (result.success && result.unread_count > 0) {

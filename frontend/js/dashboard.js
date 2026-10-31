@@ -20,6 +20,12 @@ async function initDashboard() {
     return;
   }
 
+  // If administrator visits this page, seamlessly guide to admin console
+  if (session.user.role === 'admin') {
+    window.location.replace('admin-dashboard.html');
+    return;
+  }
+
   // Populate user header info
   renderUserInfo(session.user);
 
@@ -51,12 +57,12 @@ function renderUserInfo(user) {
 
 async function loadStudentDashboardData() {
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/dashboard/student-stats`, {
-      credentials: 'include'
-    });
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/dashboard/student-stats`);
 
     if (res.status === 401) {
-      window.location.href = 'login.html';
+      clearUserSession();
+      showToast('Session expired. Please sign in again.', 'warning');
+      setTimeout(() => { window.location.href = 'login.html'; }, 1000);
       return;
     }
 

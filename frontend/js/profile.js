@@ -30,12 +30,7 @@ async function initProfilePage() {
 
   // Synchronize with backend API
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/auth/me`, {
-      headers: {
-        'Authorization': `Bearer ${session.token}`
-      },
-      credentials: 'include'
-    });
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/auth/me`);
 
     if (res.ok) {
       const data = await res.json();
@@ -62,13 +57,11 @@ async function initProfilePage() {
       const updatedStudentId = studentIdInput.value.trim();
 
       try {
-        const response = await fetch(`${CONFIG.API_BASE_URL}/auth/profile`, {
+        const response = await authFetch(`${CONFIG.API_BASE_URL}/auth/profile`, {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.token}`
+            'Content-Type': 'application/json'
           },
-          credentials: 'include',
           body: JSON.stringify({
             name: updatedName,
             department: updatedDept,
@@ -115,13 +108,11 @@ async function initProfilePage() {
       }
 
       try {
-        const response = await fetch(`${CONFIG.API_BASE_URL}/auth/change-password`, {
+        const response = await authFetch(`${CONFIG.API_BASE_URL}/auth/change-password`, {
           method: 'PUT',
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.token}`
+            'Content-Type': 'application/json'
           },
-          credentials: 'include',
           body: JSON.stringify({
             currentPassword,
             newPassword: newPass,

@@ -31,9 +31,8 @@ async function initNotificationsPage() {
   if (markAllBtn) {
     markAllBtn.addEventListener('click', async () => {
       try {
-        const res = await fetch(`${CONFIG.API_BASE_URL}/notifications/read-all`, {
-          method: 'PUT',
-          credentials: 'include'
+        const res = await authFetch(`${CONFIG.API_BASE_URL}/notifications/read-all`, {
+          method: 'PUT'
         });
         const result = await res.json();
         if (res.ok) {
@@ -61,11 +60,11 @@ async function loadNotifications(container) {
   `;
 
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/notifications`, {
-      credentials: 'include'
-    });
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/notifications`);
 
     if (res.status === 401) {
+      clearUserSession();
+      showToast('Session expired. Please sign in again.', 'warning');
       window.location.href = 'login.html';
       return;
     }
@@ -188,9 +187,8 @@ function renderNotificationsList(notifications, container) {
 
 async function handleMarkSingleRead(notifId) {
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/notifications/${notifId}/read`, {
-      method: 'PUT',
-      credentials: 'include'
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/notifications/${notifId}/read`, {
+      method: 'PUT'
     });
     if (res.ok) {
       showToast('Notification marked as read.', 'info');
@@ -204,9 +202,8 @@ async function handleMarkSingleRead(notifId) {
 
 async function handleDeleteNotification(notifId) {
   try {
-    const res = await fetch(`${CONFIG.API_BASE_URL}/notifications/${notifId}`, {
-      method: 'DELETE',
-      credentials: 'include'
+    const res = await authFetch(`${CONFIG.API_BASE_URL}/notifications/${notifId}`, {
+      method: 'DELETE'
     });
     if (res.ok) {
       showToast('Notification removed.', 'info');
