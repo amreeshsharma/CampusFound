@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../css/navbar.css">
   <link rel="stylesheet" href="../css/dashboard.css">
   <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/forms.css">
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/responsive.css">
   <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
@@ -25,7 +26,7 @@
         <a href="../index.html" class="navbar-brand">
           <img src="../assets/logos/logo.svg" alt="CampusFind 2.0 Logo">
         </a>
-        <span class="badge badge-match" style="background-color: var(--primary-color); color: var(--white); border: none;">ADMIN CONSOLE</span>
+        <span class="badge badge-match" style="background-color: var(--primary-color); color: #FFFFFF; border: none;">ADMIN CONSOLE</span>
       </div>
 
       <nav class="nav-menu">
@@ -49,70 +50,85 @@
         </div>
       </div>
 
-      <!-- Admin KPI Counters -->
-      <div class="stat-grid">
+      <!-- Admin KPI Stat Grid (6 KPIs from MySQL) -->
+      <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
         <div class="stat-card">
           <div class="stat-icon-wrapper stat-icon-primary">👥</div>
           <div class="stat-content">
-            <div class="stat-value">148</div>
-            <div class="stat-label">Active Students</div>
+            <div class="stat-value" id="admin-stat-users">0</div>
+            <div class="stat-label">Total Users</div>
           </div>
         </div>
 
         <div class="stat-card">
           <div class="stat-icon-wrapper stat-icon-danger">🔍</div>
           <div class="stat-content">
-            <div class="stat-value">42</div>
-            <div class="stat-label">Lost Reports</div>
+            <div class="stat-value" id="admin-stat-lost">0</div>
+            <div class="stat-label">Total Lost Reports</div>
           </div>
         </div>
 
         <div class="stat-card">
           <div class="stat-icon-wrapper stat-icon-success">📦</div>
           <div class="stat-content">
-            <div class="stat-value">37</div>
-            <div class="stat-label">Found In Custody</div>
+            <div class="stat-value" id="admin-stat-found">0</div>
+            <div class="stat-label">Total Found Reports</div>
           </div>
         </div>
 
         <div class="stat-card">
           <div class="stat-icon-wrapper stat-icon-warning">📑</div>
           <div class="stat-content">
-            <div class="stat-value">8</div>
-            <div class="stat-label">Pending Claim Audits</div>
+            <div class="stat-value" id="admin-stat-claims">0</div>
+            <div class="stat-label">Total Claims</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-danger">⏳</div>
+          <div class="stat-content">
+            <div class="stat-value" id="admin-stat-pending-claims">0</div>
+            <div class="stat-label">Pending Claims</div>
           </div>
         </div>
 
         <div class="stat-card">
           <div class="stat-icon-wrapper stat-icon-primary">🏆</div>
           <div class="stat-content">
-            <div class="stat-value">350+</div>
-            <div class="stat-label">Resolved Recoveries</div>
+            <div class="stat-value" id="admin-stat-resolved">0</div>
+            <div class="stat-label">Resolved Cases</div>
           </div>
         </div>
       </div>
 
-      <!-- Admin Tab Switcher -->
-      <div class="admin-header-tabs">
+      <!-- Admin Management Tabs Switcher -->
+      <div class="admin-header-tabs" style="overflow-x: auto; white-space: nowrap;">
         <button class="admin-tab-btn active" data-tab="tab-claims">
-          📑 Review Claims (3 Pending)
+          📑 Claim Management
         </button>
         <button class="admin-tab-btn" data-tab="tab-items">
-          📦 Manage Item Registry
+          📦 Item Management
         </button>
         <button class="admin-tab-btn" data-tab="tab-users">
-          👥 Registered Users
+          👥 User Management
+        </button>
+        <button class="admin-tab-btn" data-tab="tab-categories">
+          🏷️ Category Management
+        </button>
+        <button class="admin-tab-btn" data-tab="tab-activities">
+          ⚡ Recent Activities
         </button>
         <button class="admin-tab-btn" data-tab="tab-analytics">
           📈 Platform Analytics & Trends
         </button>
       </div>
 
-      <!-- Tab 1: Claims Review -->
+      <!-- Section 1: Claim Management -->
       <section id="tab-claims" class="admin-tab-content active">
         <div class="card">
-          <div class="card-header">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
             <h3 style="font-size: 1.15rem;">Ownership Claims Requiring Admin Action</h3>
+            <button class="btn btn-outline-secondary btn-sm" onclick="loadAdminClaims()">🔄 Refresh</button>
           </div>
           <div class="table-responsive">
             <table class="admin-table">
@@ -128,67 +144,7 @@
               </thead>
               <tbody id="admin-claims-tbody">
                 <tr>
-                  <td><strong>CLM-1092</strong></td>
-                  <td>
-                    <div class="table-user-cell">
-                      <div class="table-user-avatar">RS</div>
-                      <div>
-                        <div style="font-weight:600;">Rahul Sharma</div>
-                        <div style="font-size:0.75rem; color:var(--color-text-muted);">23CSE012</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>Casio fx-991EX Calculator</td>
-                  <td style="font-size: 0.8125rem; max-width: 280px;">
-                    "Silver name sticker 'Rahul S.' on rear battery slide cover with minor scratch."
-                  </td>
-                  <td><span class="badge badge-pending">PENDING AUDIT</span></td>
-                  <td>
-                    <div style="display: flex; gap: 0.4rem;">
-                      <button class="btn btn-success btn-sm" onclick="handleAdminApproveClaim('CLM-1092')">Approve</button>
-                      <button class="btn btn-danger btn-sm" onclick="handleAdminRejectClaim('CLM-1092')">Reject</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>CLM-1044</strong></td>
-                  <td>
-                    <div class="table-user-cell">
-                      <div class="table-user-avatar">AP</div>
-                      <div>
-                        <div style="font-weight:600;">Ananya Patel</div>
-                        <div style="font-size:0.75rem; color:var(--color-text-muted);">22ECE045</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>Wireless Earbuds Case</td>
-                  <td style="font-size: 0.8125rem; max-width: 280px;">
-                    "Left earbud charging contact dented; matches serial SN-78."
-                  </td>
-                  <td><span class="badge badge-approved">APPROVED</span></td>
-                  <td>
-                    <span style="font-size:0.75rem; color:var(--color-success); font-weight:600;">Verified Handover</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td><strong>CLM-0988</strong></td>
-                  <td>
-                    <div class="table-user-cell">
-                      <div class="table-user-avatar">KV</div>
-                      <div>
-                        <div style="font-weight:600;">Karan Verma</div>
-                        <div style="font-size:0.75rem; color:var(--color-text-muted);">24ME019</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>Stainless Steel Water Flask</td>
-                  <td style="font-size: 0.8125rem; max-width: 280px;">
-                    "Claimed silver color with superhero stickers."
-                  </td>
-                  <td><span class="badge badge-rejected">REJECTED</span></td>
-                  <td>
-                    <span style="font-size:0.75rem; color:var(--color-text-muted);">Mismatch audit</span>
-                  </td>
+                  <td colspan="6" style="text-align: center; padding: 2rem;">Loading claims from campus registry...</td>
                 </tr>
               </tbody>
             </table>
@@ -196,11 +152,12 @@
         </div>
       </section>
 
-      <!-- Tab 2: Manage Items Registry -->
+      <!-- Section 2: Item Management -->
       <section id="tab-items" class="admin-tab-content">
         <div class="card">
-          <div class="card-header">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
             <h3 style="font-size: 1.15rem;">Campus Belongings Registry</h3>
+            <button class="btn btn-outline-secondary btn-sm" onclick="loadAdminItems()">🔄 Refresh</button>
           </div>
           <div class="table-responsive">
             <table class="admin-table">
@@ -216,36 +173,9 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="admin-items-tbody">
                 <tr>
-                  <td>#001</td>
-                  <td>Blue Hydro Flask Water Bottle</td>
-                  <td><span class="badge badge-found">FOUND</span></td>
-                  <td>Bottles</td>
-                  <td>Central Library, 2nd Flr</td>
-                  <td><code>QR-FND-88219</code></td>
-                  <td><span class="badge badge-found">OPEN</span></td>
-                  <td><button class="btn btn-outline-secondary btn-sm" onclick="handleAdminDeleteItem(1)">Delete</button></td>
-                </tr>
-                <tr>
-                  <td>#002</td>
-                  <td>Casio Scientific Calculator fx-991EX</td>
-                  <td><span class="badge badge-lost">LOST</span></td>
-                  <td>Electronics</td>
-                  <td>Mech Lab 3</td>
-                  <td>—</td>
-                  <td><span class="badge badge-pending">CLAIM PENDING</span></td>
-                  <td><button class="btn btn-outline-secondary btn-sm" onclick="handleAdminDeleteItem(2)">Delete</button></td>
-                </tr>
-                <tr>
-                  <td>#003</td>
-                  <td>Noise Cancelling Wireless Earbuds</td>
-                  <td><span class="badge badge-found">FOUND</span></td>
-                  <td>Electronics</td>
-                  <td>Auditorium, Row F</td>
-                  <td><code>QR-FND-43921</code></td>
-                  <td><span class="badge badge-recovered">RECOVERED</span></td>
-                  <td><button class="btn btn-outline-secondary btn-sm" onclick="handleAdminDeleteItem(3)">Delete</button></td>
+                  <td colspan="8" style="text-align: center; padding: 2rem;">Loading items from MySQL...</td>
                 </tr>
               </tbody>
             </table>
@@ -253,50 +183,28 @@
         </div>
       </section>
 
-      <!-- Tab 3: Users Management -->
+      <!-- Section 3: User Management -->
       <section id="tab-users" class="admin-tab-content">
         <div class="card">
-          <div class="card-header">
-            <h3 style="font-size: 1.15rem;">Registered Students & Staff</h3>
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-size: 1.15rem;">Registered Students & Staff Accounts</h3>
+            <button class="btn btn-outline-secondary btn-sm" onclick="loadAdminUsers()">🔄 Refresh</button>
           </div>
           <div class="table-responsive">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>Student Name</th>
+                  <th>User / Student</th>
                   <th>Roll / ID</th>
                   <th>Email</th>
                   <th>Department</th>
                   <th>Role</th>
-                  <th>Account Status</th>
+                  <th>Registered Date</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="admin-users-tbody">
                 <tr>
-                  <td>
-                    <div class="table-user-cell">
-                      <div class="table-user-avatar">AS</div>
-                      <span style="font-weight:600;">Aman Sharma</span>
-                    </div>
-                  </td>
-                  <td>23CSE089</td>
-                  <td>student@campus.edu</td>
-                  <td>Computer Science & Engineering</td>
-                  <td>Student</td>
-                  <td><span class="badge badge-found">ACTIVE</span></td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="table-user-cell">
-                      <div class="table-user-avatar">CS</div>
-                      <span style="font-weight:600;">Campus Security Admin</span>
-                    </div>
-                  </td>
-                  <td>STAFF-001</td>
-                  <td>admin@campusfind.edu</td>
-                  <td>Campus Security Command</td>
-                  <td>Administrator</td>
-                  <td><span class="badge badge-found">ACTIVE</span></td>
+                  <td colspan="6" style="text-align: center; padding: 2rem;">Loading users...</td>
                 </tr>
               </tbody>
             </table>
@@ -304,24 +212,109 @@
         </div>
       </section>
 
-      <!-- Tab 4: Analytics with Chart.js -->
-      <section id="tab-analytics" class="admin-tab-content">
-        <div class="charts-grid">
-          <div class="chart-card">
-            <h4>Item Categories Distribution</h4>
-            <div class="chart-container">
-              <canvas id="chart-categories"></canvas>
+      <!-- Section 4: Category Management -->
+      <section id="tab-categories" class="admin-tab-content">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;" class="admin-category-grid">
+          <div class="card">
+            <div class="card-header">
+              <h3 style="font-size: 1.15rem;">Item Categories in Registry</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Category Name</th>
+                    <th>Description</th>
+                    <th>Associated Items</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-categories-tbody">
+                  <tr>
+                    <td colspan="4" style="text-align: center; padding: 2rem;">Loading categories...</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
-          <div class="chart-card">
-            <h4>Monthly Lost vs. Recovery Resolution Trends</h4>
-            <div class="chart-container">
-              <canvas id="chart-monthly-trends"></canvas>
+          <!-- Add Category Card -->
+          <div class="card">
+            <div class="card-header">
+              <h3 style="font-size: 1.1rem;">Add New Category</h3>
+            </div>
+            <div class="card-body">
+              <form id="admin-add-category-form">
+                <div class="form-group">
+                  <label class="form-label" for="new-cat-name">Category Name <span class="required">*</span></label>
+                  <input type="text" id="new-cat-name" class="form-control" placeholder="e.g. Sports Equipment" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="new-cat-desc">Description</label>
+                  <textarea id="new-cat-desc" class="form-textarea" placeholder="Brief explanation of items in this category..." rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-sm">Add Category</button>
+              </form>
             </div>
           </div>
         </div>
       </section>
+
+      <!-- Section 5: Recent Activities -->
+      <section id="tab-activities" class="admin-tab-content">
+        <div class="card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-size: 1.15rem;">Live Campus Audit Trail & Activities</h3>
+            <button class="btn btn-outline-secondary btn-sm" onclick="loadAdminStats()">🔄 Refresh</button>
+          </div>
+          <div class="card-body">
+            <div class="activity-list" id="admin-activities-container">
+              <p style="text-align: center; color: var(--color-text-muted); padding: 1.5rem;">Loading activity stream...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Analytics with Chart.js -->
+      <section id="tab-analytics" class="admin-tab-content">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+          <button class="btn btn-outline-secondary btn-sm" onclick="initAdminCharts()">🔄 Reload Visuals</button>
+        </div>
+        <div class="charts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem;">
+          <!-- Chart 1: Lost vs Found Items -->
+          <div class="chart-card">
+            <h4>Lost vs. Found Items Distribution</h4>
+            <div class="chart-container" style="position: relative; height: 260px;">
+              <canvas id="chart-lost-found"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: Monthly Item Reports -->
+          <div class="chart-card">
+            <h4>Monthly Item Reports Trend</h4>
+            <div class="chart-container" style="position: relative; height: 260px;">
+              <canvas id="chart-monthly-trends"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 3: Claim Status Distribution -->
+          <div class="chart-card">
+            <h4>Ownership Claim Status Distribution</h4>
+            <div class="chart-container" style="position: relative; height: 260px;">
+              <canvas id="chart-claim-status"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 4: Frequently Reported Categories -->
+          <div class="chart-card">
+            <h4>Most Frequently Reported Categories</h4>
+            <div class="chart-container" style="position: relative; height: 260px;">
+              <canvas id="chart-categories"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   </main>
 
@@ -338,4 +331,3 @@
   <script src="../js/admin.js"></script>
 </body>
 </html>
-

@@ -323,12 +323,36 @@ const changePassword = async (req, res, next) => {
   }
 };
 
+/**
+ * @route   GET /api/users
+ * @desc    Get all registered users across the campus (Admin only)
+ * @access  Private (authMiddleware + adminMiddleware)
+ */
+const getAllUsers = async (req, res, next) => {
+  try {
+    const [users] = await db.query(
+      `SELECT id, name, email, role, student_id, department, phone, created_at 
+       FROM users 
+       ORDER BY created_at DESC`
+    );
+
+    res.status(200).json({
+      success: true,
+      count: users.length,
+      data: users
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   register,
   login,
   logout,
   getMe,
   updateProfile,
-  changePassword
+  changePassword,
+  getAllUsers
 };
 

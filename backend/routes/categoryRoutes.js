@@ -4,10 +4,15 @@
 
 const express = require('express');
 const router = express.Router();
-const { getAllCategories } = require('../controllers/categoryController');
+const { getAllCategories, createCategory } = require('../controllers/categoryController');
 
-// GET /api/categories - List all categories
+const authMiddleware = require('../middleware/authMiddleware');
+const adminMiddleware = require('../middleware/adminMiddleware');
+
+// Public Category Listing
 router.get('/', getAllCategories);
 
-module.exports = router;
+// Admin Category Management
+router.post('/', authMiddleware, adminMiddleware, createCategory);
 
+module.exports = router;

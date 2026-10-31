@@ -55,6 +55,10 @@ function updateNavbarAuth() {
     authContainer.innerHTML = `
       <a href="${pagesPrefix}report-lost.html" class="btn btn-outline btn-sm">Report Lost</a>
       <a href="${pagesPrefix}report-found.html" class="btn btn-secondary btn-sm">Report Found</a>
+      <a href="${pagesPrefix}notifications.html" class="nav-notification-link" title="Notifications" style="position: relative; font-size: 1.15rem; text-decoration: none; padding: 0.25rem 0.5rem; display: inline-flex; align-items: center;">
+        <span>🔔</span>
+        <span class="nav-unread-badge" id="navbar-unread-badge" style="display:none; position: absolute; top: 0; right: 2px; background: var(--color-error, #C84B4B); color: #fff; font-size: 0.625rem; font-weight: 700; border-radius: 999px; padding: 1px 5px; min-width: 14px; text-align: center; line-height: 1.3;"></span>
+      </a>
       <div class="nav-user">
         <div class="user-avatar-small" title="${session.user.name}">${initials}</div>
         <div class="user-dropdown">
@@ -71,6 +75,20 @@ function updateNavbarAuth() {
         </div>
       </div>
     `;
+
+    // Fetch unread count for navbar badge
+    fetch(`${CONFIG.API_BASE_URL}/notifications/unread-count`, { credentials: 'include' })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success && result.unread_count > 0) {
+          const badge = document.getElementById('navbar-unread-badge');
+          if (badge) {
+            badge.textContent = result.unread_count > 99 ? '99+' : result.unread_count;
+            badge.style.display = 'inline-block';
+          }
+        }
+      })
+      .catch(() => {});
   }
 }
 

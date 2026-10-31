@@ -97,11 +97,11 @@
       </div>
 
       <!-- KPI Stat Grid -->
-      <section class="stat-grid">
+      <section class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
         <div class="stat-card">
           <div class="stat-icon-wrapper stat-icon-primary">📁</div>
           <div class="stat-content">
-            <div class="stat-value" id="stat-total-reported">6</div>
+            <div class="stat-value" id="stat-total-reported">0</div>
             <div class="stat-label">Total Reports</div>
           </div>
         </div>
@@ -109,39 +109,47 @@
         <div class="stat-card">
           <div class="stat-icon-wrapper stat-icon-danger">🔍</div>
           <div class="stat-content">
-            <div class="stat-value" id="stat-total-lost">2</div>
-            <div class="stat-label">Active Lost Items</div>
+            <div class="stat-value" id="stat-total-lost">0</div>
+            <div class="stat-label">Lost Items</div>
           </div>
         </div>
 
         <div class="stat-card">
           <div class="stat-icon-wrapper stat-icon-success">📦</div>
           <div class="stat-content">
-            <div class="stat-value" id="stat-total-found">3</div>
-            <div class="stat-label">Found Belongings</div>
+            <div class="stat-value" id="stat-total-found">0</div>
+            <div class="stat-label">Found Items</div>
           </div>
         </div>
 
         <div class="stat-card">
           <div class="stat-icon-wrapper stat-icon-warning">⚡</div>
           <div class="stat-content">
-            <div class="stat-value" id="stat-total-matches">2</div>
+            <div class="stat-value" id="stat-total-matches">0</div>
             <div class="stat-label">Possible Matches</div>
           </div>
         </div>
 
         <div class="stat-card">
-          <div class="stat-icon-wrapper stat-icon-primary">📑</div>
+          <div class="stat-icon-wrapper stat-icon-primary">⏳</div>
           <div class="stat-content">
-            <div class="stat-value" id="stat-total-claims">1</div>
-            <div class="stat-label">Claims in Review</div>
+            <div class="stat-value" id="stat-total-pending-claims">0</div>
+            <div class="stat-label">Pending Claims</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon-wrapper stat-icon-success">✅</div>
+          <div class="stat-content">
+            <div class="stat-value" id="stat-total-approved-claims">0</div>
+            <div class="stat-label">Approved Claims</div>
           </div>
         </div>
       </section>
 
       <!-- Dashboard Two Column Grid -->
       <div class="dashboard-grid-2">
-        <!-- Left Column: Match Suggestions & Activity -->
+        <!-- Left Column: Match Suggestions & Recent Reports -->
         <div>
           <!-- Smart Match Suggestion Alert Card -->
           <div style="margin-bottom: 1.5rem;">
@@ -154,10 +162,21 @@
             </div>
           </div>
 
-          <!-- Recent Activity Log Card -->
+          <!-- Recently Reported Items by Me -->
+          <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+              <h3 style="font-size: 1.1rem;">My Recently Reported Items</h3>
+              <a href="lost-items.html" style="font-size: 0.8125rem;">View Catalog</a>
+            </div>
+            <div class="card-body" id="recent-reports-container">
+              <!-- Rendered via dashboard.js -->
+            </div>
+          </div>
+
+          <!-- Recent Notifications & Activity Log Card -->
           <div class="card">
             <div class="card-header">
-              <h3 style="font-size: 1.1rem;">Recent Timeline & Audit Trail</h3>
+              <h3 style="font-size: 1.1rem;">Recent Notifications & Alerts</h3>
               <a href="notifications.html" style="font-size: 0.8125rem;">View All</a>
             </div>
             <div class="card-body">
@@ -176,16 +195,19 @@
             </div>
             <div class="card-body" style="display: flex; flex-direction: column; gap: 0.625rem;">
               <a href="report-lost.html" class="btn btn-outline btn-block btn-sm" style="justify-content: flex-start;">
-                <span>📝</span> Report a Lost Belonging
+                <span>📝</span> Report Lost Item
               </a>
               <a href="report-found.html" class="btn btn-secondary btn-block btn-sm" style="justify-content: flex-start;">
-                <span>🎁</span> Hand In / Report Found Item
+                <span>🎁</span> Report Found Item
+              </a>
+              <a href="lost-items.html" class="btn btn-outline-secondary btn-block btn-sm" style="justify-content: flex-start;">
+                <span>🔍</span> Browse Lost Items
               </a>
               <a href="found-items.html" class="btn btn-outline-secondary btn-block btn-sm" style="justify-content: flex-start;">
-                <span>📱</span> Check QR-Tagged Items
+                <span>📦</span> Browse Found Items
               </a>
               <a href="my-claims.html" class="btn btn-outline-secondary btn-block btn-sm" style="justify-content: flex-start;">
-                <span>📑</span> Track Ownership Claims
+                <span>📑</span> View My Claims
               </a>
             </div>
           </div>
