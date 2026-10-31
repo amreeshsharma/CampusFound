@@ -22,3 +22,4 @@ router.get('/admin-stats', authMiddleware, adminMiddleware, getAdminStats);
 router.get('/analytics', authMiddleware, adminMiddleware, getAnalytics);
 
 module.exports = router;
+

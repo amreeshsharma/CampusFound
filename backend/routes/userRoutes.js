@@ -13,3 +13,4 @@ const adminMiddleware = require('../middleware/adminMiddleware');
 router.get('/', authMiddleware, adminMiddleware, getAllUsers);
 
 module.exports = router;
+
