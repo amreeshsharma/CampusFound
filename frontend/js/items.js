@@ -77,7 +77,7 @@ async function fetchAndRenderItems(container, filters = {}) {
 
   try {
     const queryParams = new URLSearchParams();
-    if (filters.type) queryParams.append('type', filters.type);
+    if (filters.type && filters.type !== 'all') queryParams.append('type', filters.type);
     if (filters.category_id) queryParams.append('category_id', filters.category_id);
     if (filters.location) queryParams.append('location', filters.location);
     if (filters.search) queryParams.append('search', filters.search);
@@ -120,9 +120,11 @@ async function fetchAndRenderItems(container, filters = {}) {
 
 function renderItemsGrid(items, container) {
   if (!items || items.length === 0) {
+    const isPagesFolder = window.location.pathname.includes('/pages/');
+    const assetsPrefix = isPagesFolder ? '../' : '';
     container.innerHTML = `
       <div class="empty-state" style="grid-column: 1 / -1;">
-        <img src="../assets/images/empty-state.svg" class="empty-state-icon" alt="No items found">
+        <img src="${assetsPrefix}assets/images/empty-state.svg" class="empty-state-icon" alt="No items found">
         <h4 class="empty-state-title">No items found matching your filters</h4>
         <p class="empty-state-text">Try adjusting your search criteria or report a new lost/found item.</p>
       </div>
@@ -130,13 +132,17 @@ function renderItemsGrid(items, container) {
     return;
   }
 
+  const isPagesFolder = window.location.pathname.includes('/pages/');
+  const pagesPrefix = isPagesFolder ? '' : 'pages/';
+  const assetsPrefix = isPagesFolder ? '../' : '';
+
   container.innerHTML = items.map(item => {
     const isLost = item.item_type === 'lost';
     const badgeClass = isLost ? 'badge-lost' : 'badge-found';
     const badgeText = isLost ? 'LOST' : 'FOUND';
 
     // Resolve Image URL
-    let imgSrc = '../assets/images/hero-illustration.svg';
+    let imgSrc = `${assetsPrefix}assets/images/hero-illustration.svg`;
     if (item.image_path) {
       if (item.image_path.startsWith('http') || item.image_path.startsWith('../') || item.image_path.startsWith('./')) {
         imgSrc = item.image_path;
@@ -153,7 +159,7 @@ function renderItemsGrid(items, container) {
     return `
       <article class="item-card">
         <div class="item-card-image-wrap">
-          <img src="${imgSrc}" alt="${item.title}" class="item-card-image" onerror="this.src='../assets/images/hero-illustration.svg'">
+          <img src="${imgSrc}" alt="${item.title}" class="item-card-image" onerror="this.src='${assetsPrefix}assets/images/hero-illustration.svg'">
           <span class="badge ${badgeClass} item-card-badge">${badgeText}</span>
           <span class="item-card-date-badge">📅 ${formatDate(item.item_date)}</span>
         </div>
@@ -178,7 +184,7 @@ function renderItemsGrid(items, container) {
             ` : ''}
           </div>
           <div style="display: flex; gap: 0.5rem; margin-top: auto;">
-            <a href="item-details.html?id=${item.id}" class="btn btn-primary btn-sm btn-block">View Details</a>
+            <a href="${pagesPrefix}item-details.html?id=${item.id}" class="btn btn-primary btn-sm btn-block">View Details</a>
             ${!isLost && item.status === 'open' ? `
               <button class="btn btn-secondary btn-sm" onclick="openClaimModal(${item.id})">Claim</button>
             ` : ''}
