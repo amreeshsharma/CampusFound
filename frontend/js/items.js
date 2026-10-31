@@ -272,7 +272,7 @@ async function initItemDetailsPage() {
   if (claimBtn) {
     if (item.item_type === 'found' && item.status === 'open') {
       claimBtn.style.display = 'inline-flex';
-      claimBtn.onclick = () => openClaimModal(item.id);
+      claimBtn.onclick = () => openClaimModal(item.id, item.title);
     } else {
       claimBtn.style.display = 'none';
     }
@@ -283,6 +283,32 @@ async function initItemDetailsPage() {
       qrBox.style.display = 'block';
       const qrTokenText = document.getElementById('detail-qr-token');
       if (qrTokenText) qrTokenText.textContent = item.qr_token;
+
+      // Asynchronously fetch dynamic QR Data URL from backend
+      fetch(`${CONFIG.API_BASE_URL}/items/${item.id}/qrcode`)
+        .then(res => res.json())
+        .then(resData => {
+          if (resData.success && resData.data && resData.data.qrDataUrl) {
+            qrBox.innerHTML = `
+              <div style="font-weight: 700; color: var(--primary-color); margin-bottom: 0.25rem;">
+                📱 QR Custody Verification Tag
+              </div>
+              <p style="font-size: 0.75rem; color: var(--color-text-muted); margin-bottom: 0.75rem;">
+                Campus security can scan this token to verify custody and handover.
+              </p>
+              <img src="${resData.data.qrDataUrl}" alt="Item Custody QR Code" style="width: 130px; height: 130px; margin: 0 auto 0.5rem; display: block; border-radius: 8px; border: 1px solid var(--color-border-subtle); background: #FFFFFF; padding: 4px;">
+              <div style="font-family: var(--font-family-mono); font-weight: 700; font-size: 0.8125rem; color: var(--primary-color); margin-bottom: 0.5rem;">
+                ${item.qr_token}
+              </div>
+              <a href="${resData.data.verificationUrl}" class="btn btn-outline-secondary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.65rem;">
+                🔍 Verify Custody
+              </a>
+            `;
+          }
+        })
+        .catch(err => {
+          console.warn('Dynamic QR fetch note:', err.message);
+        });
     } else {
       qrBox.style.display = 'none';
     }

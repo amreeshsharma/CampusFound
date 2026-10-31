@@ -6,6 +6,7 @@
 const path = require('path');
 const fs = require('fs');
 const { db } = require('../config/db');
+const { generateQRCodeDataURL } = require('../services/qrService');
 
 /**
  * Valid Status Transitions
@@ -435,10 +436,105 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
+/**
+ * @route   GET /api/items/:id/qrcode
+ * @desc    Generate dynamic QR code Data URL for an eligible found item
+ * @access  Public
+ */
+const getItemQRCode = async (req, res, next) => {
+  try {
+    const itemId = parseInt(req.params.id, 10);
+    if (isNaN(itemId)) {
+      return res.status(400).json({ success: false, message: 'Invalid item ID parameter.' });
+    }
+
+    const [rows] = await db.query(
+      'SELECT id, title, item_type, qr_token FROM items WHERE id = ?',
+      [itemId]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Item not found.' });
+    }
+
+    const item = rows[0];
+
+    if (!item.qr_token) {
+      return res.status(400).json({
+        success: false,
+        message: 'This item does not have a custody QR token (eligible for found items only).'
+      });
+    }
+
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
+    const qrResult = await generateQRCodeDataURL(item.qr_token, baseUrl);
+
+    res.status(200).json({
+      success: true,
+      data: qrResult
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @route   GET /api/items/verify-qr/:token
+ * @desc    Validate QR token & return safe public item details (NO private owner data)
+ * @access  Public
+ */
+const verifyQRToken = async (req, res, next) => {
+  try {
+    const token = req.params.token ? req.params.token.trim() : '';
+
+    if (!token) {
+      return res.status(400).json({ success: false, message: 'QR verification token required.' });
+    }
+
+    const [rows] = await db.query(
+      `SELECT 
+        i.id,
+        i.title,
+        c.category_name,
+        i.item_type,
+        i.color,
+        i.location,
+        i.item_date,
+        i.image_path,
+        i.status,
+        i.qr_token,
+        i.created_at
+       FROM items i
+       LEFT JOIN categories c ON i.category_id = c.id
+       WHERE i.qr_token = ?`,
+      [token]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        verified: false,
+        message: 'Invalid or unrecognized QR custody token.'
+      });
+    }
+
+    // Return sanitized public info only - NO owner email or phone exposed
+    res.status(200).json({
+      success: true,
+      verified: true,
+      data: rows[0]
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createItem,
   getAllItems,
   getItemById,
   updateItem,
-  deleteItem
+  deleteItem,
+  getItemQRCode,
+  verifyQRToken
 };

@@ -1,20 +1,19 @@
 /**
  * CampusFind 2.0 - Administrator Dashboard Controller
- * Handles admin tabs, review & verification actions, and Chart.js analytics
+ * Handles admin tabs, live claims auditing & verification actions, and Chart.js analytics
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   initAdminDashboard();
   initAdminTabs();
+  loadAdminClaims();
   initAdminCharts();
 });
 
 function initAdminDashboard() {
   const session = getUserSession();
-  // Role check simulation: if not admin, inform user for demonstration
   if (!session || session.user.role !== 'admin') {
-    // Keep accessible for evaluation presentation, display friendly notice
-    console.info('Viewing Admin Console in preview mode.');
+    console.info('Viewing Admin Console in preview mode or as guest.');
   }
 }
 
@@ -36,6 +35,92 @@ function initAdminTabs() {
   });
 }
 
+// Load real claims from backend API
+async function loadAdminClaims() {
+  const tbody = document.getElementById('admin-claims-tbody');
+  if (!tbody) return;
+
+  try {
+    const res = await fetch(`${CONFIG.API_BASE_URL}/claims`, {
+      credentials: 'include'
+    });
+
+    if (!res.ok) {
+      console.warn('Could not load live claims from admin API (auth required).');
+      return;
+    }
+
+    const result = await res.json();
+    if (!result.success || !Array.isArray(result.data) || result.data.length === 0) {
+      return;
+    }
+
+    renderAdminClaims(result.data, tbody);
+  } catch (err) {
+    console.warn('Live admin claims fetch notice:', err.message);
+  }
+}
+
+function renderAdminClaims(claims, tbody) {
+  tbody.innerHTML = claims.map(c => {
+    let statusBadge = 'badge-pending';
+    let statusText = 'PENDING AUDIT';
+
+    if (c.status === 'approved') {
+      statusBadge = 'badge-approved';
+      statusText = 'APPROVED';
+    } else if (c.status === 'rejected') {
+      statusBadge = 'badge-rejected';
+      statusText = 'REJECTED';
+    } else if (c.status === 'verified') {
+      statusBadge = 'badge-verified';
+      statusText = 'VERIFIED';
+    }
+
+    const claimantInitials = c.claimant_name 
+      ? c.claimant_name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
+      : 'ST';
+
+    let actionButtons = '';
+    if (c.status === 'pending' || c.status === 'verified') {
+      actionButtons = `
+        <div style="display: flex; gap: 0.4rem;">
+          <button class="btn btn-success btn-sm" onclick="handleAdminApproveClaim(${c.id})">Approve</button>
+          <button class="btn btn-danger btn-sm" onclick="handleAdminRejectClaim(${c.id})">Reject</button>
+        </div>
+      `;
+    } else if (c.status === 'approved') {
+      actionButtons = `<span style="font-size:0.75rem; color:var(--color-success); font-weight:600;">✅ Verified Handover</span>`;
+    } else {
+      actionButtons = `<span style="font-size:0.75rem; color:var(--color-text-muted);">❌ Mismatch audit</span>`;
+    }
+
+    return `
+      <tr>
+        <td><strong>CLM-${c.id}</strong></td>
+        <td>
+          <div class="table-user-cell">
+            <div class="table-user-avatar">${claimantInitials}</div>
+            <div>
+              <div style="font-weight:600;">${c.claimant_name || 'Student'}</div>
+              <div style="font-size:0.75rem; color:var(--color-text-muted);">${c.claimant_student_id || c.claimant_email}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div style="font-weight:600;">${c.item_title}</div>
+          <div style="font-size:0.75rem; color:var(--color-text-muted);">${c.category_name || ''} &bull; ${c.color || ''}</div>
+        </td>
+        <td style="font-size: 0.8125rem; max-width: 280px;">
+          "${c.verification_details}"
+        </td>
+        <td><span class="badge ${statusBadge}">${statusText}</span></td>
+        <td>${actionButtons}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
 // Chart.js Visualizations for Analytics Tab
 function initAdminCharts() {
   const categoryCanvas = document.getElementById('chart-categories');
@@ -43,7 +128,6 @@ function initAdminCharts() {
 
   // Verify Chart.js is loaded
   if (typeof Chart === 'undefined') {
-    console.warn('Chart.js library not detected on page.');
     return;
   }
 
@@ -111,18 +195,70 @@ function initAdminCharts() {
   }
 }
 
-// Action Handlers for Claims & Reports
-function handleAdminApproveClaim(claimId) {
-  const remarks = prompt('Enter approval pickup instructions (e.g., Counter 1 Security Desk):', 'Verified ownership match. Available for pickup at Security Desk.');
-  if (remarks !== null) {
-    showToast(`Claim ${claimId} approved! Student notified.`, 'success');
+// Action Handlers for Claims & Reports with real Backend API Calls
+async function handleAdminApproveClaim(claimId) {
+  const remarks = prompt(
+    'Enter approval remarks & student collection instructions:',
+    'Verified ownership match. Available for physical collection at Security Desk (Gate 1).'
+  );
+  if (remarks === null) return;
+
+  try {
+    const rawId = typeof claimId === 'string' && claimId.startsWith('CLM-') ? claimId.replace('CLM-', '') : claimId;
+    const res = await fetch(`${CONFIG.API_BASE_URL}/claims/${rawId}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        status: 'approved',
+        admin_remarks: remarks
+      })
+    });
+
+    const result = await res.json();
+    if (!res.ok) {
+      showToast(result.message || 'Failed to approve claim.', 'error');
+      return;
+    }
+
+    showToast(`Claim #${rawId} successfully APPROVED! Item marked recovered and student notified.`, 'success', 5000);
+    await loadAdminClaims();
+  } catch (err) {
+    console.error('Approve claim error:', err);
+    showToast('Network error while approving claim.', 'error');
   }
 }
 
-function handleAdminRejectClaim(claimId) {
-  const reason = prompt('Enter rejection reason for audit log:', 'Identifying marks did not match item.');
-  if (reason !== null) {
-    showToast(`Claim ${claimId} rejected with audit remarks.`, 'error');
+async function handleAdminRejectClaim(claimId) {
+  const reason = prompt(
+    'Enter rejection reason for campus audit log:',
+    'Submitted verification details did not match the physical custody item.'
+  );
+  if (reason === null) return;
+
+  try {
+    const rawId = typeof claimId === 'string' && claimId.startsWith('CLM-') ? claimId.replace('CLM-', '') : claimId;
+    const res = await fetch(`${CONFIG.API_BASE_URL}/claims/${rawId}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        status: 'rejected',
+        admin_remarks: reason
+      })
+    });
+
+    const result = await res.json();
+    if (!res.ok) {
+      showToast(result.message || 'Failed to reject claim.', 'error');
+      return;
+    }
+
+    showToast(`Claim #${rawId} has been REJECTED. Remarks logged and student notified.`, 'info', 4500);
+    await loadAdminClaims();
+  } catch (err) {
+    console.error('Reject claim error:', err);
+    showToast('Network error while rejecting claim.', 'error');
   }
 }
 
@@ -131,4 +267,3 @@ function handleAdminDeleteItem(itemId) {
     showToast(`Item #${itemId} removed.`, 'info');
   }
 }
-

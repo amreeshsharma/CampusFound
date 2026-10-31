@@ -10,16 +10,24 @@ const {
   getAllItems,
   getItemById,
   updateItem,
-  deleteItem
+  deleteItem,
+  getItemQRCode,
+  verifyQRToken
 } = require('../controllers/itemController');
 
 const { getItemMatches } = require('../controllers/matchingController');
 const authMiddleware = require('../middleware/authMiddleware');
 const { uploadItemImage } = require('../middleware/uploadMiddleware');
 
+// Public Verification Endpoint for QR Code Token
+router.get('/verify-qr/:token', verifyQRToken);
+
 // Public Listing & Detail Endpoints
 router.get('/', getAllItems);
 router.get('/:id', getItemById);
+
+// Public / Authorized QR Code generation endpoint
+router.get('/:id/qrcode', getItemQRCode);
 
 // Rule-Based Smart Matching Endpoint for a specific item
 router.get('/:id/matches', getItemMatches);

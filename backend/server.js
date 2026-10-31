@@ -21,6 +21,7 @@ const authRoutes = require('./routes/authRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const itemRoutes = require('./routes/itemRoutes');
 const matchingRoutes = require('./routes/matchingRoutes');
+const claimRoutes = require('./routes/claimRoutes');
 
 // Import Middleware
 const errorHandler = require('./middleware/errorHandler');
@@ -88,6 +89,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/items', itemRoutes);
 app.use('/api/matches', matchingRoutes);
+app.use('/api/claims', claimRoutes);
 
 // Fallback for frontend root: serve index.html
 app.get('/', (req, res) => {
@@ -115,6 +117,7 @@ app.listen(PORT, async () => {
   console.log(` Auth APIs   : http://localhost:${PORT}/api/auth`);
   console.log(` Items API   : http://localhost:${PORT}/api/items`);
   console.log(` Matches API : http://localhost:${PORT}/api/matches`);
+  console.log(` Claims API  : http://localhost:${PORT}/api/claims`);
   console.log(`====================================================`);
 
   // Verify MySQL Connection Pool

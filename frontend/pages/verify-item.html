@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Custody Verification - CampusFind 2.0</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/items.css">
+  <link rel="stylesheet" href="../css/forms.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/logos/favicon.svg">
+  <style>
+    .verify-card {
+      background: var(--color-surface, #ffffff);
+      border: 1px solid var(--color-border, #E2D9CC);
+      border-radius: var(--border-radius-lg, 12px);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .verify-header {
+      background: linear-gradient(135deg, var(--primary-color, #004953) 0%, var(--primary-dark, #00333A) 100%);
+      color: #FFFFFF;
+      padding: 2rem 2rem 1.75rem;
+      text-align: center;
+      position: relative;
+    }
+    .verify-shield-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.75rem;
+      backdrop-filter: blur(4px);
+    }
+    .verify-token-chip {
+      display: inline-block;
+      font-family: var(--font-family-mono, monospace);
+      background: rgba(239, 222, 205, 0.2);
+      border: 1px dashed rgba(239, 222, 205, 0.5);
+      color: var(--secondary-color, #EFDECD);
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+    }
+    .verify-body {
+      padding: 2rem;
+    }
+    .verify-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      background: var(--color-bg-light, #FDFCFA);
+      border: 1px solid var(--color-border-subtle, #F0EAE1);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 600px) {
+      .verify-meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .privacy-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      background: #E8F4F5;
+      border-left: 4px solid var(--primary-color, #004953);
+      padding: 0.875rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.8125rem;
+      color: var(--color-text-dark, #183438);
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container">
+      <a href="../index.html" class="navbar-brand">
+        <img src="../assets/logos/logo.svg" alt="CampusFind 2.0 Logo">
+      </a>
+
+      <nav class="nav-menu">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="lost-items.html" class="nav-link">Lost Items</a>
+        <a href="found-items.html" class="nav-link">Found Items</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <!-- Rendered by navbar.js -->
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content section" style="padding-top: 2rem; padding-bottom: 3.5rem;">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <div style="margin-bottom: 1.25rem; max-width: 760px; margin-left: auto; margin-right: auto;">
+        <a href="found-items.html" style="font-size: 0.875rem; display: inline-flex; align-items: center; gap: 0.35rem; color: var(--color-text-muted);">
+          <span>←</span> Back to Found Items Catalog
+        </a>
+      </div>
+
+      <!-- Main Verification Card -->
+      <div class="verify-card" id="verification-card">
+        <!-- State: Loading -->
+        <div id="verify-loading" style="text-align: center; padding: 4rem 2rem;">
+          <span class="spinner" style="width: 42px; height: 42px; margin: 0 auto;"></span>
+          <h3 style="margin-top: 1.25rem; color: var(--primary-color);">Verifying QR Custody Token...</h3>
+          <p style="color: var(--color-text-muted); font-size: 0.875rem;">Contacting Campus Registry for authenticated item records</p>
+        </div>
+
+        <!-- State: Verified Success -->
+        <div id="verify-success" style="display: none;">
+          <div class="verify-header">
+            <div class="verify-shield-badge">
+              <span>🛡️</span> AUTHENTICATED CUSTODY RECORD
+            </div>
+            <h1 style="font-size: 1.75rem; margin-bottom: 0.25rem; color: #FFFFFF;" id="verified-item-title">Item Title</h1>
+            <div class="verify-token-chip" id="verified-token-display">QR-FND-TOKEN</div>
+          </div>
+
+          <div class="verify-body">
+            <!-- Privacy Protection Banner -->
+            <div class="privacy-notice">
+              <span style="font-size: 1.25rem;">🔒</span>
+              <div>
+                <strong>FERPA & Student Privacy Compliance:</strong>
+                Finder contact details and private serial numbers are restricted. Only authorized Campus Security personnel and verified claimants can audit full handover documentation.
+              </div>
+            </div>
+
+            <!-- Custody Status Pill -->
+            <div style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+              <div>
+                <span style="font-size: 0.8125rem; color: var(--color-text-muted); display: block;">Official Custody Status</span>
+                <span id="verified-status-badge" class="badge badge-found" style="font-size: 0.875rem; padding: 0.35rem 0.85rem;">IN CUSTODY</span>
+              </div>
+              <div id="verified-custody-location" style="font-size: 0.875rem; font-weight: 600; color: var(--primary-color);">
+                📍 Deposited at Security Desk
+              </div>
+            </div>
+
+            <!-- Meta Grid -->
+            <div class="verify-meta-grid">
+              <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted);">Category</span>
+                <div style="font-weight: 600; margin-top: 0.25rem;" id="verified-category">Electronics</div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted);">Location Found</span>
+                <div style="font-weight: 600; margin-top: 0.25rem;" id="verified-location">Central Library</div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted);">Color / Appearance</span>
+                <div style="font-weight: 600; margin-top: 0.25rem;" id="verified-color">Black / Silver</div>
+              </div>
+              <div>
+                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted);">Date Recovered / Logged</span>
+                <div style="font-weight: 600; margin-top: 0.25rem;" id="verified-date">Oct 28, 2026</div>
+              </div>
+            </div>
+
+            <!-- Public Description -->
+            <div style="margin-bottom: 2rem;">
+              <h4 style="font-size: 1rem; margin-bottom: 0.5rem;">Public Identifying Notes</h4>
+              <p style="color: var(--color-text-muted); font-size: 0.9375rem; line-height: 1.6;" id="verified-description">
+                Item is safely kept at campus security. Prove ownership by identifying specific stickers, engravings, or wallpaper details.
+              </p>
+            </div>
+
+            <!-- Actions -->
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <button class="btn btn-primary btn-lg" id="verify-claim-btn" style="flex: 1;">
+                <span>✋</span> Submit Ownership Claim
+              </button>
+              <a href="#" class="btn btn-outline-secondary btn-lg" id="verify-details-link">
+                View Full Item Page
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- State: Error / Invalid Token -->
+        <div id="verify-error" style="display: none; text-align: center; padding: 4rem 2rem;">
+          <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+          <h2 style="color: var(--color-danger, #B83A2E); margin-bottom: 0.5rem;">Invalid or Expired QR Token</h2>
+          <p style="color: var(--color-text-muted); max-width: 480px; margin: 0 auto 1.5rem; font-size: 0.9375rem;" id="verify-error-message">
+            This QR code token could not be verified against the CampusFind 2.0 database. It may be expired, altered, or unregistered.
+          </p>
+          <a href="found-items.html" class="btn btn-primary">Browse All Found Items</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Claim Submission Modal -->
+  <div class="modal-overlay" id="claim-submission-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <span class="badge badge-pending">OWNERSHIP VERIFICATION</span>
+          <h3 class="modal-title">Submit Verification Details</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('claim-submission-modal')">&times;</button>
+      </div>
+      <form id="claim-submission-form">
+        <div class="modal-body">
+          <input type="hidden" id="claim-item-id-input" value="">
+          <p style="font-size: 0.875rem; margin-bottom: 1rem;">
+            Claiming: <strong id="claim-modal-item-title" style="color: var(--primary-color);">Found Item</strong>
+          </p>
+          <div class="form-group">
+            <label class="form-label" for="claim-verification-details">
+              Hidden Identifying Marks / Verification Details <span class="required">*</span>
+            </label>
+            <textarea id="claim-verification-details" class="form-textarea" placeholder="Detail any stickers, dents, custom markings, serial numbers, or lock patterns that prove you own this item..." rows="4" required></textarea>
+            <span style="font-size: 0.75rem; color: var(--color-text-muted);">
+              Provide specific evidence that only the genuine owner would know.
+            </span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="closeModal('claim-submission-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm" id="claim-submit-button">Submit Verification</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container text-center" style="font-size: 0.8125rem; color: #A3B8BA;">
+      &copy; 2026 CampusFind 2.0. Academic PBL Submission &bull; B.Tech CSE
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/config.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/navbar.js"></script>
+  <script src="../js/claims.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+
+      const loadingView = document.getElementById('verify-loading');
+      const successView = document.getElementById('verify-success');
+      const errorView = document.getElementById('verify-error');
+      const errorMessage = document.getElementById('verify-error-message');
+
+      if (!token) {
+        loadingView.style.display = 'none';
+        errorView.style.display = 'block';
+        if (errorMessage) errorMessage.textContent = 'No QR verification token was provided in the URL.';
+        return;
+      }
+
+      try {
+        const res = await fetch(`${CONFIG.API_BASE_URL}/items/verify-qr/${encodeURIComponent(token.trim())}`);
+        const result = await res.json();
+
+        loadingView.style.display = 'none';
+
+        if (!res.ok || !result.success || !result.data) {
+          errorView.style.display = 'block';
+          if (errorMessage) errorMessage.textContent = result.message || 'QR token verification failed.';
+          return;
+        }
+
+        const item = result.data;
+        successView.style.display = 'block';
+
+        // Bind data
+        document.getElementById('verified-item-title').textContent = item.title;
+        document.getElementById('verified-token-display').textContent = item.qr_token || token;
+        document.getElementById('verified-category').textContent = item.category_name || 'General';
+        document.getElementById('verified-location').textContent = item.location;
+        document.getElementById('verified-color').textContent = item.color;
+        document.getElementById('verified-date').textContent = formatDate(item.item_date);
+
+        // Status
+        const statusBadge = document.getElementById('verified-status-badge');
+        const claimBtn = document.getElementById('verify-claim-btn');
+
+        if (item.status === 'open') {
+          statusBadge.className = 'badge badge-found';
+          statusBadge.textContent = 'IN CUSTODY • UNCLAIMED';
+          claimBtn.style.display = 'inline-flex';
+          claimBtn.onclick = () => openClaimModal(item.id, item.title);
+        } else if (item.status === 'claim_pending') {
+          statusBadge.className = 'badge badge-pending';
+          statusBadge.textContent = 'CLAIM UNDER REVIEW';
+          claimBtn.style.display = 'none';
+        } else if (item.status === 'recovered') {
+          statusBadge.className = 'badge badge-recovered';
+          statusBadge.textContent = 'RECOVERED BY OWNER';
+          claimBtn.style.display = 'none';
+        } else {
+          statusBadge.className = 'badge';
+          statusBadge.textContent = item.status.toUpperCase();
+          claimBtn.style.display = 'none';
+        }
+
+        // Details Link
+        const detailsLink = document.getElementById('verify-details-link');
+        if (detailsLink) {
+          detailsLink.href = `item-details.html?id=${item.id}`;
+        }
+
+      } catch (err) {
+        console.error('QR verification error:', err);
+        loadingView.style.display = 'none';
+        errorView.style.display = 'block';
+        if (errorMessage) errorMessage.textContent = 'Network error contacting campus verification server.';
+      }
+    });
+  </script>
+</body>
+</html>
+
