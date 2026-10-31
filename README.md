@@ -1,13 +1,13 @@
-# CampusFind 2.0 🎓
+# CampusFind 🎓
 ### Smart Campus Lost & Found Management Platform
-> **A Full-Stack Web Application for College Campuses**  
-> Developed for B.Tech Computer Science and Engineering (Web Technology PBL)
+> **Enterprise Full-Stack Web Application for University Campuses**  
+> Streamlined Item Recovery, Transparent Multi-Factor Matching, and QR Code Custody Verification
 
 ---
 
 ## 🌟 Overview
 
-**CampusFind 2.0** is an enterprise-grade, responsive full-stack platform designed to eliminate the chaos of lost and misplaced belongings across college campuses. It bridges the gap between students who lose items and good Samaritans or security staff who find them.
+**CampusFind** is an enterprise-grade, responsive full-stack platform designed to eliminate the chaos of lost and misplaced belongings across college campuses. It bridges the gap between students who lose items and good Samaritans or security staff who find them.
 
 ### Key Innovations
 - 🧠 **Rule-Based Smart Item Matching**: An automated scoring engine that computes weighted similarity (category, keywords, color, location, date proximity) to proactively suggest potential matches between lost and found items.
@@ -18,7 +18,7 @@
 
 ## 🎨 Brand & Design System
 
-CampusFind 2.0 adheres to a modern, human-centric SaaS dashboard aesthetic:
+CampusFind adheres to a modern, human-centric SaaS dashboard aesthetic:
 - **Primary Brand Color**: `#004953` (Deep Teal) — Navbar, primary buttons, headings
 - **Secondary Brand Color**: `#EFDECD` (Warm Beige) — Badges, accents, highlights
 - **Canvas / Background**: `#FAF8F5` (Light Pearl)

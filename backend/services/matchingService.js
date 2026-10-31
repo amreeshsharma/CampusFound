@@ -1,5 +1,5 @@
 /**
- * CampusFind 2.0 - Rule-Based Smart Item Matching Engine
+ * CampusFind - Rule-Based Smart Item Matching Engine
  * Compares Lost and Found belongings based on weighted heuristic criteria.
  * 
  * Configurable Weights (Total 100%):
@@ -9,8 +9,8 @@
  * - Location: 20%
  * - Date Proximity: 10%
  * 
- * NOTE: This is a deterministic rule-based algorithm designed for explainable
- * B.Tech Web Technology PBL evaluation (NO opaque ML / AI models).
+ * NOTE: This is a deterministic rule-based algorithm designed for transparent,
+ * explainable campus matching (NO opaque ML / AI models).
  */
 
 const { db } = require('../config/db');

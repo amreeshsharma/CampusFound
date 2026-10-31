@@ -1,7 +1,7 @@
 -- =============================================================================
--- CampusFind 2.0 - Relational Database Schema (DDL)
+-- CampusFind - Relational Database Schema (DDL)
 -- Database: campusfind_db
--- Designed for B.Tech CSE Web Technology Project-Based Learning (PBL)
+-- Enterprise Campus Lost & Found Management System
 -- =============================================================================
 
 CREATE DATABASE IF NOT EXISTS campusfind_db
